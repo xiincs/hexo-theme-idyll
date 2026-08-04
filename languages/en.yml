@@ -1,0 +1,54 @@
+menu:
+  home: Home
+  archive: Archive
+  categories: Categories
+  tags: Tags
+
+nav_label: Site navigation
+skip_to_content: Skip to content
+anchor_label: Link to this section
+archive: Archive
+categories: Categories
+tags: Tags
+untitled: Untitled
+
+min_read: min read
+words: words
+posted_on: Posted on
+updated_on: Updated
+
+newer: Newer
+older: Older
+prev_post: Newer post
+next_post: Older post
+
+in_category: in category
+in_tag: tagged
+post_count:
+  zero: No posts yet
+  one: '1 post'
+  other: '%d posts'
+category_count:
+  zero: No categories yet
+  one: '1 category'
+  other: '%d categories'
+tag_count:
+  zero: No tags yet
+  one: '1 tag'
+  other: '%d tags'
+
+back_to_top: Back to top
+theme_auto: Auto
+theme_light: Light
+theme_dark: Dark
+copy: Copy
+copied: Copied
+copy_failed: Press Ctrl+C
+
+empty_posts: Nothing here yet. The first one is always the hardest.
+empty_categories: No categories yet.
+empty_tags: No tags yet.
+
+not_found_title: This page went quiet
+not_found_text: The link is broken, or the page moved on. Neither is your fault.
+not_found_home: Take me home

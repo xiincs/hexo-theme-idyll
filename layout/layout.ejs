@@ -1,0 +1,39 @@
+<%
+  const extra = theme.extras || {};
+  const flags = [
+    extra.copy_code      ? 'copy'   : '',
+    extra.heading_anchor ? 'anchor' : '',
+    extra.external_mark  ? 'ext'    : ''
+  ].filter(Boolean).join(' ');
+%><!DOCTYPE html>
+<html lang="<%= config.language || 'en' %>">
+<%- partial('_partial/head') %>
+<body data-quiet="<%= flags %>"
+      data-copy="<%= __('copy') %>"
+      data-copied="<%= __('copied') %>"
+      data-copyfail="<%= __('copy_failed') %>"
+      data-anchor="<%= __('anchor_label') %>">
+
+  <% if (extra.scroll_progress && is_post()) { %>
+    <div class="progress" id="progress" aria-hidden="true"><i></i></div>
+  <% } %>
+
+  <a class="skip" href="#main"><%= __('skip_to_content') %></a>
+
+  <%- partial('_partial/header') %>
+
+  <main class="main" id="main"><%- body %></main>
+
+  <%- partial('_partial/footer') %>
+
+  <% if (extra.back_to_top) { %>
+    <button class="totop" id="totop" type="button" aria-label="<%= __('back_to_top') %>">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false">
+        <path d="M8 3.6l5.2 5.2-1.1 1.1L8.8 6.8V13h-1.6V6.8L3.9 9.9 2.8 8.8z" fill="currentColor"/>
+      </svg>
+    </button>
+  <% } %>
+
+  <script src="<%- url_for('/js/main.js') %>" defer></script>
+</body>
+</html>

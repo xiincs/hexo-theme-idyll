@@ -1,0 +1,25 @@
+<%
+  const tags = site.tags.sort('name').toArray().filter(t => t.length > 0);
+  const max  = tags.length ? Math.max(...tags.map(t => t.length)) : 0;
+%>
+
+<section class="wrap page-head">
+  <h1 class="page-head__title"><%= page.title || __('tags') %></h1>
+  <p class="page-head__meta"><%= _p('tag_count', tags.length) %></p>
+</section>
+
+<section class="wrap">
+  <% if (page.content) { %><div class="prose prose--intro"><%- page.content %></div><% } %>
+
+  <% if (!tags.length) { %>
+    <p class="empty"><%= __('empty_tags') %></p>
+  <% } else { %>
+    <div class="cloud">
+      <% tags.forEach(tag => { %>
+        <a class="cloud__tag cloud__tag--<%= quiet_tagstep(tag.length, max) %>" href="<%- url_for(tag.path) %>">
+          <%= tag.name %><span class="cloud__n"><%= tag.length %></span>
+        </a>
+      <% }); %>
+    </div>
+  <% } %>
+</section>

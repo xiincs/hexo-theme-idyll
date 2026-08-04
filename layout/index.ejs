@@ -1,0 +1,20 @@
+<%
+  const hero    = theme.hero || {};
+  const heading = hero.title    || config.title;
+  const sub     = hero.subtitle || config.subtitle;
+  const first   = page.current <= 1;
+%>
+
+<% if (first && heading) { %>
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="hero__title"><%- heading %></h1>
+      <% if (sub) { %><p class="hero__sub"><%- sub %></p><% } %>
+    </div>
+  </section>
+<% } %>
+
+<section class="wrap<%= (first && heading) ? '' : ' wrap--top' %>">
+  <%- partial('_partial/post-list', { posts: page.posts }) %>
+  <%- partial('_partial/paginator') %>
+</section>

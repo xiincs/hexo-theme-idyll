@@ -1,0 +1,29 @@
+<%
+  const cats = site.categories.sort('name').toArray().filter(c => c.length > 0);
+  const total = cats.length;
+%>
+
+<section class="wrap page-head">
+  <h1 class="page-head__title"><%= page.title || __('categories') %></h1>
+  <p class="page-head__meta"><%= _p('category_count', total) %></p>
+</section>
+
+<section class="wrap">
+  <% if (page.content) { %><div class="prose prose--intro"><%- page.content %></div><% } %>
+
+  <% if (!total) { %>
+    <p class="empty"><%= __('empty_categories') %></p>
+  <% } else { %>
+    <ul class="rows">
+      <% cats.forEach(cat => { %>
+        <li class="rows__item">
+          <a class="rows__link" href="<%- url_for(cat.path) %>">
+            <span class="rows__name"><%= cat.name %></span>
+            <span class="rows__rule" aria-hidden="true"></span>
+            <span class="rows__n"><%= cat.length %></span>
+          </a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</section>

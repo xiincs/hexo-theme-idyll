@@ -1,0 +1,66 @@
+<%
+  const opts  = theme.post || {};
+  const tags  = page.tags && page.tags.length ? page.tags.toArray() : [];
+  const cats  = page.categories && page.categories.length ? page.categories.toArray() : [];
+  const mins  = quiet_readtime(page.content, opts.reading_speed);
+  const words = quiet_wordcount(page.content);
+  const edited = page.updated && page.date &&
+                 date(page.updated, 'YYYY-MM-DD') !== date(page.date, 'YYYY-MM-DD');
+%>
+
+<article class="post">
+  <header class="wrap post__head">
+    <% if (cats.length) { %>
+      <p class="post__kicker">
+        <% cats.forEach((cat, i) => { %><% if (i) { %><span class="sep">/</span><% } %><a href="<%- url_for(cat.path) %>"><%= cat.name %></a><% }); %>
+      </p>
+    <% } %>
+
+    <h1 class="post__title"><%= page.title || __('untitled') %></h1>
+
+    <div class="post__meta">
+      <%# 光秃秃一个日期，读屏软件念出来没有上下文，补一句只给它听的前缀 %>
+      <time datetime="<%= date_xml(page.date) %>"><span class="sr-only"><%= __('posted_on') %> </span><%= date(page.date, 'YYYY-MM-DD') %></time>
+      <% if (opts.show_word_count) { %>
+        <span class="dot" aria-hidden="true">·</span>
+        <span><%= words.toLocaleString('en-US') %> <%= __('words') %></span>
+      <% } %>
+      <% if (opts.show_reading_time) { %>
+        <span class="dot" aria-hidden="true">·</span>
+        <span><%= mins %> <%= __('min_read') %></span>
+      <% } %>
+      <% if (edited) { %>
+        <span class="dot" aria-hidden="true">·</span>
+        <span><%= __('updated_on') %> <%= date(page.updated, 'YYYY-MM-DD') %></span>
+      <% } %>
+    </div>
+  </header>
+
+  <div class="wrap prose" id="content"><%- page.content %></div>
+
+  <footer class="wrap post__foot">
+    <% if (tags.length) { %>
+      <div class="post__tags">
+        <% tags.forEach(tag => { %><a class="pill pill--link" href="<%- url_for(tag.path) %>"><%= tag.name %></a><% }); %>
+      </div>
+    <% } %>
+
+    <% if (page.prev || page.next) { %>
+      <nav class="nextprev" aria-label="<%= __('archive') %>">
+        <% if (page.prev) { %>
+          <a class="nextprev__card" href="<%- url_for(page.prev.path) %>" rel="prev">
+            <span class="nextprev__label"><span aria-hidden="true">←</span> <%= __('prev_post') %></span>
+            <span class="nextprev__title"><%= page.prev.title || __('untitled') %></span>
+          </a>
+        <% } else { %><span></span><% } %>
+
+        <% if (page.next) { %>
+          <a class="nextprev__card nextprev__card--r" href="<%- url_for(page.next.path) %>" rel="next">
+            <span class="nextprev__label"><%= __('next_post') %> <span aria-hidden="true">→</span></span>
+            <span class="nextprev__title"><%= page.next.title || __('untitled') %></span>
+          </a>
+        <% } else { %><span></span><% } %>
+      </nav>
+    <% } %>
+  </footer>
+</article>

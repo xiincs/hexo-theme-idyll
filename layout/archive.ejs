@@ -1,0 +1,41 @@
+<%
+  // 归档 / 分类 / 标签三种归档页共用这个模板，只是抬头不一样。
+  let kicker = '';
+  let heading = __('archive');
+  let total = site.posts.length;
+
+  if (is_category()) {
+    kicker  = __('in_category');
+    heading = page.category;
+    const found = site.categories.findOne({ name: page.category.split('/').pop() });
+    if (found) total = found.length;
+  } else if (is_tag()) {
+    kicker  = __('in_tag');
+    heading = page.tag;
+    const found = site.tags.findOne({ name: page.tag });
+    if (found) total = found.length;
+  } else if (page.year) {
+    kicker  = __('archive');
+    const y = String(page.year);
+    const m = page.month ? String(page.month).padStart(2, '0') : '';
+    heading = m ? `${y}.${m}` : y;
+    // page.posts 只是当前这一页，翻页后就不对了；总数得回站点里数
+    total = site.posts.filter(p =>
+      date(p.date, 'YYYY') === y && (!m || date(p.date, 'MM') === m)
+    ).length;
+  }
+
+  // _p 是 Hexo 自带的复数助手，按数量自动挑 zero / one / other
+  const label = _p('post_count', total);
+%>
+
+<section class="wrap page-head">
+  <% if (kicker) { %><p class="page-head__kicker"><%= kicker %></p><% } %>
+  <h1 class="page-head__title"><%= heading %></h1>
+  <p class="page-head__meta"><%= label %></p>
+</section>
+
+<section class="wrap">
+  <%- partial('_partial/post-list', { posts: page.posts }) %>
+  <%- partial('_partial/paginator') %>
+</section>

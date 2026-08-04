@@ -1,0 +1,111 @@
+<%
+  const site  = config.title || '';
+  const extra = theme.extras || {};
+  let  title  = site;
+  let  desc   = page.description || config.description || '';
+
+  if (is_archive() && !is_category() && !is_tag()) {
+    title = [__('archive'), site].filter(Boolean).join(' · ');
+  } else if (is_category()) {
+    title = [page.category, site].filter(Boolean).join(' · ');
+  } else if (is_tag()) {
+    title = [page.tag, site].filter(Boolean).join(' · ');
+  } else if (is_home()) {
+    title = config.subtitle ? `${site} · ${config.subtitle}` : site;
+  } else if (page.title) {
+    title = [page.title, site].filter(Boolean).join(' · ');
+  }
+
+  if (!desc && is_post()) desc = quiet_excerpt(page, 150);
+%>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <%# 声明两套配色，浏览器的表单控件和滚动条才会跟着一起变 %>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" id="tc-light">
+  <meta name="theme-color" content="#171715" media="(prefers-color-scheme: dark)" id="tc-dark">
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var key  = 'quiet-theme';
+
+      root.classList.add('js');
+
+      var saved = null;
+      try { saved = localStorage.getItem(key); } catch (err) {}
+
+      var tcLight = document.getElementById('tc-light');
+      var tcDark  = document.getElementById('tc-dark');
+      var colors  = { light: '#fcfcfb', dark: '#171715' };
+
+      function syncChrome(mode) {
+        if (tcLight && tcDark) {
+          var c = colors[mode] || null;
+          tcLight.content = c || '#fcfcfb';
+          tcDark.content  = c || '#171715';
+        }
+      }
+
+      if (saved === 'light' || saved === 'dark') {
+        root.setAttribute('data-theme', saved);
+        syncChrome(saved);
+      }
+
+      function wire() {
+        var btn = document.getElementById('theme');
+        if (!btn) return;
+
+        var state = document.getElementById('theme-state');
+
+        function paint(mode) {
+          if (mode) root.setAttribute('data-theme', mode);
+          else root.removeAttribute('data-theme');
+
+          if (state) state.textContent = btn.getAttribute('data-' + (mode || 'auto'));
+
+          syncChrome(mode);
+
+          try {
+            if (mode) localStorage.setItem(key, mode);
+            else localStorage.removeItem(key);
+          } catch (err) {}
+        }
+
+        btn.addEventListener('click', function () {
+          var cur     = root.getAttribute('data-theme') || '';
+          var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (cur === '') paint(sysDark ? 'light' : 'dark');
+          else if (cur === 'light') paint('dark');
+          else paint('');
+        });
+
+        paint(root.getAttribute('data-theme') || '');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', wire);
+      } else {
+        wire();
+      }
+    })();
+  </script>
+
+  <title><%= title %></title>
+  <% if (desc) { %><meta name="description" content="<%= desc %>"><% } %>
+  <% if (config.author) { %><meta name="author" content="<%= config.author %>"><% } %>
+  <% if (config.keywords) { %><meta name="keywords" content="<%= config.keywords %>"><% } %>
+
+  <%- open_graph({ title, description: desc, twitter_card: 'summary' }) %>
+  <%# canonical 必须是绝对地址。url_for 没有 absolute 选项，得用 full_url_for %>
+  <link rel="canonical" href="<%- full_url_for(page.path || '/') %>">
+  <link rel="icon" href="<%- url_for('/images/favicon.svg') %>" type="image/svg+xml">
+  <% if (config.feed && config.feed.path) { %>
+  <link rel="alternate" type="application/atom+xml" href="<%- url_for(config.feed.path) %>" title="<%= site %>">
+  <% } %>
+
+  <link rel="stylesheet" href="<%- url_for('/css/style.css') %>">
+  <%- partial('_partial/head-extras') %>
+</head>

@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────────────────────
+#  quiet — 一个安静、好读的 Hexo 主题
+#  改这个文件就够了，不用动模板。
+# ─────────────────────────────────────────────────────────────
+
+# 顶部导航。key 会去 languages/*.yml 里找 menu.<key> 作为文案。
+menu:
+  home: /
+  archive: /archives/
+  categories: /categories/
+  tags: /tags/
+
+# 首页开场白。title 留空即可整块隐藏。
+hero:
+  title: '把想清楚的事情，写下来。'
+  subtitle: '关于代码、工具，以及一些还没想明白的日常。'
+
+# 列表与正文
+post:
+  excerpt_length: 110    # 列表里摘要截断的字数
+  reading_speed: 300     # 每分钟阅读字数，用来估算阅读时间
+  show_reading_time: true
+  show_word_count: true  # 文章页显示字数（中文按字、西文按词）
+
+# 页脚
+footer:
+  note: ''               # 想说的一句话，支持 HTML；留空则不显示
+  since: ''              # 建站年份，如 2024。留空只显示当前年份
+  powered_by: true       # 是否在页脚署一句 Hexo
+
+# 社交链接。key 是显示文案，value 是完整 URL。整块留空则不显示。
+social:
+  GitHub: https://github.com/xiincs
+
+# 那些不吵人的小心思，都可以在这里单独关掉
+extras:
+  scroll_progress: true  # 文章页顶部的阅读进度线
+  back_to_top: true      # 右下角回到顶部
+  copy_code: true        # 代码块右上角的复制按钮
+  heading_anchor: true   # 标题悬停时出现的锚点
+  external_mark: true    # 站外链接后面的 ↗
+  theme_toggle: true     # 顶栏主题切换按钮：跟随系统 / 亮 / 暗

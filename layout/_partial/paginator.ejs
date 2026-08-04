@@ -1,0 +1,17 @@
+<% if (page.total > 1) { %>
+<nav class="pager" aria-label="Pagination">
+  <% if (page.prev) { %>
+    <a class="pager__btn" href="<%- url_for(page.prev_link) %>" rel="prev"><span aria-hidden="true">←</span> <%= __('newer') %></a>
+  <% } else { %>
+    <span class="pager__btn is-off"><span aria-hidden="true">←</span> <%= __('newer') %></span>
+  <% } %>
+
+  <span class="pager__count"><%= page.current %> / <%= page.total %></span>
+
+  <% if (page.next) { %>
+    <a class="pager__btn" href="<%- url_for(page.next_link) %>" rel="next"><%= __('older') %> <span aria-hidden="true">→</span></a>
+  <% } else { %>
+    <span class="pager__btn is-off"><%= __('older') %> <span aria-hidden="true">→</span></span>
+  <% } %>
+</nav>
+<% } %>

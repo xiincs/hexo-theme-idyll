@@ -1,0 +1,54 @@
+menu:
+  home: 首页
+  archive: 归档
+  categories: 分类
+  tags: 标签
+
+nav_label: 站点导航
+skip_to_content: 跳到正文
+anchor_label: 链接到这一节
+archive: 归档
+categories: 分类
+tags: 标签
+untitled: 无标题
+
+min_read: 分钟
+words: 字
+posted_on: 发布于
+updated_on: 更新于
+
+newer: 更新
+older: 更早
+prev_post: 上一篇
+next_post: 下一篇
+
+in_category: 分类
+in_tag: 标签
+post_count:
+  zero: 还没有文章
+  one: '1 篇'
+  other: '%d 篇'
+category_count:
+  zero: 还没有分类
+  one: '1 个分类'
+  other: '%d 个分类'
+tag_count:
+  zero: 还没有标签
+  one: '1 个标签'
+  other: '%d 个标签'
+
+back_to_top: 回到顶部
+theme_auto: 跟随系统
+theme_light: 亮色
+theme_dark: 暗色
+copy: 复制
+copied: 已复制
+copy_failed: 请按 Ctrl+C
+
+empty_posts: 这里还什么都没有。第一篇总是最难写的。
+empty_categories: 还没有分类。
+empty_tags: 还没有标签。
+
+not_found_title: 这一页安静下来了
+not_found_text: 链接可能失效了，或者这页已经搬走。都不怪你。
+not_found_home: 回首页

@@ -1,0 +1,10 @@
+<article class="post post--page">
+  <% if (page.title) { %>
+    <header class="wrap post__head">
+      <h1 class="post__title"><%= page.title %></h1>
+      <% if (page.subtitle) { %><p class="post__lede"><%= page.subtitle %></p><% } %>
+    </header>
+  <% } %>
+
+  <div class="wrap prose" id="content"><%- page.content %></div>
+</article>

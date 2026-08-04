@@ -1,0 +1,43 @@
+<%#
+  年份分组的文章列表。调用方传入 posts（Query 或数组）。
+  首页、归档、分类、标签都用它，保证四个地方长得一模一样。
+%>
+<%
+  const items = typeof posts.toArray === 'function' ? posts.toArray() : (posts || []);
+  const opts  = theme.post || {};
+  let lastYear = null;
+%>
+
+<% if (!items.length) { %>
+  <p class="empty"><%= __('empty_posts') %></p>
+<% } else { %>
+  <div class="list">
+    <% items.forEach(post => {
+         const year = date(post.date, 'YYYY');
+         const tags = post.tags && post.tags.length ? post.tags.toArray() : [];
+         if (year !== lastYear) { lastYear = year; %>
+      <div class="year">
+        <span class="year__n"><%= year %></span>
+        <span class="year__rule"></span>
+      </div>
+    <% } %>
+
+      <a class="item" href="<%- url_for(post.path) %>">
+        <time class="item__date" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+
+        <div class="item__body">
+          <h2 class="item__title"><%= post.title || __('untitled') %><span class="item__arrow" aria-hidden="true">→</span></h2>
+
+          <% const summary = quiet_excerpt(post, opts.excerpt_length); %>
+          <% if (summary) { %><p class="item__desc"><%= summary %></p><% } %>
+
+          <% if (tags.length) { %>
+            <div class="item__tags">
+              <% tags.forEach(tag => { %><span class="pill"><%= tag.name %></span><% }); %>
+            </div>
+          <% } %>
+        </div>
+      </a>
+    <% }); %>
+  </div>
+<% } %>

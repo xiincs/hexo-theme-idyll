@@ -1,0 +1,24 @@
+<%
+  const foot   = theme.footer || {};
+  const social = theme.social || {};
+  const now    = new Date().getFullYear();
+  const since  = String(foot.since || '').trim();
+  const years  = since && String(now) !== since ? `${since}–${now}` : String(now);
+%>
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__left">
+      <% if (foot.note) { %><p class="foot__note"><%- foot.note %></p><% } %>
+      <p class="foot__copy">© <%= years %> <%= config.author || config.title %></p>
+    </div>
+
+    <div class="foot__right">
+      <% for (const label in social) { %>
+        <a class="foot__link" href="<%- social[label] %>" target="_blank" rel="noopener noreferrer"><%= label %></a>
+      <% } %>
+      <% if (foot.powered_by) { %>
+        <a class="foot__link foot__link--dim" href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a>
+      <% } %>
+    </div>
+  </div>
+</footer>
