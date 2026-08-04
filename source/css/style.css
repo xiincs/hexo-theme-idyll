@@ -205,7 +205,9 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-h) + 16px);
+  /* 全站唯一的一处滚动留白，标题自己不再重复设 scroll-margin-top ——
+     两个一起用会叠加（导航栏高度被补偿了两次），锚点跳转落点会明显偏下 */
+  scroll-padding-top: calc(var(--nav-h) + 8px);
 }
 
 body {
@@ -861,7 +863,7 @@ button { font: inherit; color: inherit; }
 /* 用相邻兄弟选择器统一节奏，比给每个标签单独设 margin 好维护 */
 .prose > * + * { margin-top: 1.15em; }
 
-.prose h2, .prose h3, .prose h4 { position: relative; scroll-margin-top: calc(var(--nav-h) + 20px); }
+.prose h2, .prose h3, .prose h4 { position: relative; }
 .prose > h2 { margin-top: 2.1em; font-size: 1.4em; letter-spacing: -.018em; }
 .prose > h3 { margin-top: 1.8em; font-size: 1.18em; }
 .prose > h4 { margin-top: 1.6em; font-size: 1.02em; }
@@ -905,19 +907,30 @@ button { font: inherit; color: inherit; }
   text-align: center;
 }
 
-.prose table {
+/* 只选 .prose 的直接子元素，代码块内部的行号表格嵌在 figure.highlight 里，选不到 */
+.prose > table {
   width: 100%;
   border-collapse: collapse;
   font-size: .93em;
   display: block;
   overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
-.prose th, .prose td {
+.prose > table th, .prose > table td {
   padding: 9px 14px;
   border: 1px solid var(--border);
   text-align: left;
 }
-.prose th { background: var(--bg-soft); font-weight: 600; }
+.prose > table th { background: var(--bg-soft); font-weight: 600; }
+
+/* border-collapse 底下直接给 table 加圆角，单元格自己的边框在圆角处经常会
+   戳穿出来（各浏览器表现还不一致），所以最外圈单元格的外侧边框单独摘掉，
+   边框和圆角统一交给 table 自己那一圈 */
+.prose > table tr:first-child :is(th, td) { border-top: 0; }
+.prose > table tr:last-child :is(th, td)  { border-bottom: 0; }
+.prose > table :is(th, td):first-child    { border-left: 0; }
+.prose > table :is(th, td):last-child     { border-right: 0; }
 
 .prose kbd, .shortcuts__list kbd {
   padding: 2px 6px;
