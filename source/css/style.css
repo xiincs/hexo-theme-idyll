@@ -909,7 +909,8 @@ button { font: inherit; color: inherit; }
 
 /* 只选 .prose 的直接子元素，代码块内部的行号表格嵌在 figure.highlight 里，选不到 */
 .prose > table {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   border-collapse: collapse;
   font-size: .93em;
   display: block;
