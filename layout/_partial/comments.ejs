@@ -1,0 +1,34 @@
+<%#
+  Giscus 评论。基于 GitHub Discussions，免费、无追踪、样式可控。
+
+  接入步骤：
+    1. 仓库 Settings → General → Features，勾上 Discussions
+    2. 去 https://github.com/apps/giscus 给这个仓库装 giscus app
+    3. 打开 https://giscus.app，按提示填仓库名，页面底部会生成 data-repo-id / data-category / data-category-id
+    4. 把这些值填进本文件旁边的 _config.yml 的 comment.giscus 里
+
+  repo 没填就什么都不渲染，不会出现一个报错的空评论区。
+%>
+<% const giscus = (theme.comment || {}).giscus || {}; %>
+<% if (giscus.repo && giscus.repo_id && giscus.category_id) { %>
+  <section class="comments wrap" aria-label="<%= __('comments') %>">
+    <p class="comments__label"><%= __('comments') %></p>
+    <div class="comments__box">
+      <script src="https://giscus.app/client.js"
+              data-repo="<%= giscus.repo %>"
+              data-repo-id="<%= giscus.repo_id %>"
+              data-category="<%= giscus.category || 'Announcements' %>"
+              data-category-id="<%= giscus.category_id %>"
+              data-mapping="<%= giscus.mapping || 'pathname' %>"
+              data-strict="0"
+              data-reactions-enabled="<%= giscus.reactions === false ? '0' : '1' %>"
+              data-emit-metadata="0"
+              data-input-position="bottom"
+              data-theme="preferred_color_scheme"
+              data-lang="<%= giscus.lang || config.language || 'en' %>"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+  </section>
+<% } %>

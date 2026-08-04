@@ -1,0 +1,25 @@
+<%#
+  文章内目录。调用方只在标题数 ≥ 2 时才应该输出这个 partial（见 post.ejs）。
+  tocItems 参数是 quiet_toc() 返回的嵌套结构：[{ id, text, children: [...] }]
+
+  局部变量特意不叫 toc —— hexo 核心自带一个同名内置 helper（见 node_modules/hexo/dist/plugins/helper/toc.js）。
+  调用方那层用 const 能把它词法遮蔽掉，但 locals 穿过 partial() 边界时会按
+  「调用方传入值 → 主题全局 data」的顺序再合并一次，内置的那个会把这边同名的值覆盖回去。
+%>
+<nav class="toc" aria-label="<%= __('toc') %>">
+  <p class="toc__label"><%= __('toc') %></p>
+  <ol class="toc__list">
+    <% tocItems.forEach(h2 => { %>
+      <li>
+        <a class="toc__link" href="#<%- h2.id %>" data-toc-id="<%- h2.id %>" title="<%= h2.text %>"><%= h2.text %></a>
+        <% if (h2.children.length) { %>
+          <ol class="toc__list toc__list--sub">
+            <% h2.children.forEach(h3 => { %>
+              <li><a class="toc__link toc__link--sub" href="#<%- h3.id %>" data-toc-id="<%- h3.id %>" title="<%= h3.text %>"><%= h3.text %></a></li>
+            <% }); %>
+          </ol>
+        <% } %>
+      </li>
+    <% }); %>
+  </ol>
+</nav>

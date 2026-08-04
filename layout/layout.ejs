@@ -3,7 +3,8 @@
   const flags = [
     extra.copy_code      ? 'copy'   : '',
     extra.heading_anchor ? 'anchor' : '',
-    extra.external_mark  ? 'ext'    : ''
+    extra.external_mark  ? 'ext'    : '',
+    extra.toc            ? 'toc'    : ''
   ].filter(Boolean).join(' ');
 %><!DOCTYPE html>
 <html lang="<%= config.language || 'en' %>">

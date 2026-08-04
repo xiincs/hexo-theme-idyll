@@ -85,6 +85,32 @@
     });
   }
 
+  /* 目录：滚动时高亮当前所在章节 */
+  if (on('toc') && 'IntersectionObserver' in window) {
+    var tocLinks = document.querySelectorAll('.toc__link[data-toc-id]');
+
+    if (tocLinks.length) {
+      var setActiveToc = function (id) {
+        Array.prototype.forEach.call(tocLinks, function (a) {
+          a.classList.toggle('is-on', a.getAttribute('data-toc-id') === id);
+        });
+      };
+
+      /* 只在视口上方 15%~70% 这段区间里判定「当前章节」，
+         标题刚冒头或快滑出屏幕都还不算，减少来回横跳 */
+      var tocObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) setActiveToc(entry.target.id);
+        });
+      }, { rootMargin: '-15% 0px -70% 0px' });
+
+      Array.prototype.forEach.call(tocLinks, function (a) {
+        var heading = document.getElementById(a.getAttribute('data-toc-id'));
+        if (heading) tocObserver.observe(heading);
+      });
+    }
+  }
+
   /* 站外链接：加 ↗ 标记，并补上安全的 rel */
   if (prose && on('ext')) {
     var links = prose.querySelectorAll('a[href^="http"]');
@@ -147,4 +173,27 @@
       });
     });
   }
+
+  /* --- 评论：站内手动切换主题时，giscus 的 iframe 跟着换 ------------------ */
+
+  function syncGiscusTheme(mode) {
+    var iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    var theme = mode === 'light' || mode === 'dark' ? mode : 'preferred_color_scheme';
+    iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, 'https://giscus.app');
+  }
+
+  /* 页面开着评论区时手动切主题，立刻同步 */
+  document.addEventListener('quiet:theme', function (e) { syncGiscusTheme(e.detail); });
+
+  /* giscus 的 iframe 是异步插进来的，加载完成时它自己会广播一条消息。
+     借这条消息补一次同步：如果打开页面前就已经手动切到某个主题，
+     giscus 默认跟的是系统偏好（见 comments.ejs 的 data-theme），
+     这一步能避免评论区先按系统配色闪一下、再变成站点当前配色 */
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://giscus.app') return;
+    if (!(e.data && e.data.giscus)) return;
+    var current = document.documentElement.getAttribute('data-theme');
+    if (current) syncGiscusTheme(current);
+  });
 })();

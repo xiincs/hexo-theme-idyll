@@ -1,0 +1,17 @@
+<%#
+  相关文章。调用方只在有结果时才应该输出这个 partial（见 post.ejs）。
+  posts 参数是 quiet_related() 返回的文章数组。
+%>
+<section class="related" aria-label="<%= __('related_posts') %>">
+  <p class="related__label"><%= __('related_posts') %></p>
+  <ul class="related__list">
+    <% posts.forEach(post => { %>
+      <li>
+        <a class="related__link" href="<%- url_for(post.path) %>">
+          <span class="related__title"><%= post.title || __('untitled') %><span class="item__arrow" aria-hidden="true">→</span></span>
+          <time class="related__date" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+        </a>
+      </li>
+    <% }); %>
+  </ul>
+</section>

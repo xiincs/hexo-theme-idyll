@@ -21,6 +21,24 @@ post:
   reading_speed: 300     # 每分钟阅读字数，用来估算阅读时间
   show_reading_time: true
   show_word_count: true  # 文章页显示字数（中文按字、西文按词）
+  related_count: 3       # 相关文章最多显示几篇
+
+# 评论：接的是 giscus（基于 GitHub Discussions，免费、无追踪）。
+# repo 留空就完全不渲染评论区，不用额外开关去关它。
+#
+# 接入步骤：
+#   1. 仓库 Settings → General → Features，勾上 Discussions
+#   2. 去 https://github.com/apps/giscus 给这个仓库装 giscus app
+#   3. 打开 https://giscus.app，按提示填好仓库名，页面会生成下面这些值
+comment:
+  giscus:
+    repo: ''          # 形如 'xiincs/xiin-blog'
+    repo_id: ''        # giscus.app 生成
+    category: 'Announcements'  # Discussions 的分类名，giscus.app 页面上能选
+    category_id: ''    # giscus.app 生成
+    mapping: 'pathname' # 用文章路径匹配讨论帖，一般不用改
+    lang: ''            # 留空则跟随 language 主配置
+    reactions: true     # 是否显示文章末尾的表情反应
 
 # 页脚
 footer:
@@ -40,3 +58,5 @@ extras:
   heading_anchor: true   # 标题悬停时出现的锚点
   external_mark: true    # 站外链接后面的 ↗
   theme_toggle: true     # 顶栏主题切换按钮：跟随系统 / 亮 / 暗
+  toc: true              # 文章内目录，窄屏和标题太少（<2个）时自动不出现
+  related_posts: true    # 文章末尾按标签/分类推荐相关文章

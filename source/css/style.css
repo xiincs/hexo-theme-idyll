@@ -6,6 +6,7 @@
    2. 全站只有一个强调色。它出现的地方越少，出现时越有意义。
    3. 层级靠字重、字号和留白拉开，不靠边框和阴影堆。
    4. 动效一律 ≤ 0.3s，只做位移和透明度，不做缩放弹跳。
+   5. 不用渐变。任何场景都不用 —— 背景、按钮、文字、阴影，一律纯色。
    ========================================================================== */
 
 /* --- 1. 设计变量 -------------------------------------------------------- */
@@ -652,6 +653,59 @@ button { font: inherit; color: inherit; }
   overflow: hidden;
 }
 
+/* --- 11.5 相关文章 -------------------------------------------------------- */
+
+.related { margin-top: 48px; }
+
+.related__label {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.related__list { list-style: none; padding: 0; margin: 0; }
+
+/* 悬停背景 + 圆角，跟分类/标签页 .rows__link 是同一套列表行语言 */
+.related__link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  margin-inline: -12px;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  transition: background .18s var(--ease);
+}
+.related__link:hover { background: var(--bg-soft); color: inherit; }
+.related__link:hover .item__arrow { opacity: 1; transform: none; }
+
+.related__title { font-size: 15.5px; font-weight: 500; line-height: 1.4; }
+
+.related__date {
+  flex: none;
+  color: var(--text-3);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- 11.6 评论 ------------------------------------------------------------ */
+
+/* iframe 内部是 giscus 自己的页面，样式管不到，这里只负责跟正文对齐的外部间距 */
+.comments { margin-top: 56px; }
+
+.comments__label {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 16px;
+}
+
 /* --- 12. 正文排版 ------------------------------------------------------- */
 
 .prose { color: var(--text); }
@@ -897,6 +951,65 @@ figure.highlight .strong     { font-weight: 600; }
 .oops__text  { margin-top: 12px; color: var(--text-3); font-size: 15.5px; text-wrap: pretty; }
 .oops__home  { display: inline-block; margin-top: 26px; font-size: 15.5px; }
 
+/* --- 14.5 目录 ----------------------------------------------------------- */
+
+/* 浮在正文列右侧的空白里，不挤占 .wrap 的列宽，所以够宽才出现。
+   position: fixed 相对视口定位，跟 DOM 里塞在哪一层没关系 */
+.toc {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 40px);
+  left: calc(50% + (var(--w-text) / 2) + 40px);
+  width: 196px;
+  max-height: calc(100vh - var(--nav-h) - 80px);
+  overflow-y: auto;
+}
+
+/* 768(列宽+两侧gutter) 的一半 + 196 宽的目录 + 两侧各留 40px 呼吸感，
+   凑一个明显不会跟正文重叠的下限 */
+@media (min-width: 1320px) {
+  .toc { display: block; }
+}
+
+.toc__label {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 11px;
+}
+
+.toc__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 1px solid var(--border);
+}
+.toc__list--sub { margin-block: 1px 3px; }
+
+.toc__link {
+  display: block;
+  overflow: hidden;
+  padding: 5px 4px 5px 13px;
+  margin-left: -1px;
+  border-left: 1.5px solid transparent;
+  color: var(--text-3);
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color .16s var(--ease), border-color .16s var(--ease);
+}
+.toc__link:hover { color: var(--text); }
+.toc__link--sub { padding-left: 25px; font-size: 12.5px; }
+
+.toc__link.is-on {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 500;
+}
+
 /* --- 15. 页脚 ----------------------------------------------------------- */
 
 .foot { border-top: 1px solid var(--border); padding-block: 32px 40px; }
@@ -1009,7 +1122,8 @@ figure.highlight .strong     { font-weight: 600; }
 
 @media print {
   :root { --fs-base: 11.5pt; }
-  .nav, .foot, .totop, .progress, .pager, .nextprev, .copy, .skip, .item__arrow { display: none !important; }
+  .nav, .foot, .totop, .progress, .pager, .nextprev, .copy, .skip, .item__arrow,
+  .toc, .related, .comments { display: none !important; }
   body { background: #fff; color: #000; }
   .wrap { max-width: none; padding: 0; }
   .prose a { color: #000; text-decoration: underline; }
