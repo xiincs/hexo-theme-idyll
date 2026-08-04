@@ -83,6 +83,17 @@
   to   { transform: none; opacity: 1; }
 }
 
+/* 之前只有首页 hero 会浮入，其它页面一进来就是静止的，从首页跳过去会显得突兀。
+   这里统一铺开：每类页面的「抬头」是第一层，紧接着的「内容」是第二层，
+   稍微错开一点，不追求跟首页 hero 一样精细的逐项错落 —— 长列表/长正文
+   要是每一项都单独错落，反而会显得乱，这里就整块一起浮入 */
+.page-head, .post__head, .oops {
+  animation: rise-in .6s var(--ease) backwards;
+}
+.list, .rows, .cloud, .prose {
+  animation: rise-in .6s var(--ease) .1s backwards;
+}
+
 /* --- 1.5 暗色 ----------------------------------------------------------- */
 
 /*  暗色有两个入口，所以下面这张表出现了两遍：
