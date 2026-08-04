@@ -19,6 +19,12 @@ updated_on: 更新于
 toc: 目录
 related_posts: 相关文章
 comments: 评论
+hero_stats: '%s 篇文章 · %s 个分类 · 运行 %s 天 · %s 字'
+random_post: 随便看看
+shortcuts_label: 快捷键
+shortcut_theme: 切换主题
+shortcut_home: 回到首页
+shortcut_random: 随机文章
 
 newer: 更新
 older: 更早

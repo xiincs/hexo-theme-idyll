@@ -93,3 +93,44 @@ hexo.extend.helper.register('quiet_related', function (post, limit) {
   scored.sort((a, b) => b.score - a.score || b.post.date - a.post.date);
   return scored.slice(0, max).map(s => s.post);
 });
+
+/** 站点统计：文章数、分类数、运行天数（从最早一篇算起）、全站字数 */
+hexo.extend.helper.register('quiet_site_stats', function () {
+  const posts = this.site.posts;
+
+  let oldest = null;
+  let words = 0;
+  posts.forEach(p => {
+    if (!oldest || p.date < oldest) oldest = p.date;
+    words += countWords(p.content);
+  });
+
+  const days = oldest ? Math.max(1, Math.ceil((Date.now() - oldest.valueOf()) / 86400000)) : 0;
+
+  return {
+    postCount: posts.length,
+    categoryCount: this.site.categories.length,
+    days,
+    words
+  };
+});
+
+/** 写作节奏：每篇文章在时间轴上的相对位置（0 = 最早，100 = 最新）。
+    按文章本身打点，不按日历月份分桶 —— 文章少的时候按月份会有大片空白，
+    按文章打点无论多少篇都不会出现这个问题。少于 2 篇没有"节奏"可言，
+    返回空数组，调用方据此决定要不要渲染这块 */
+hexo.extend.helper.register('quiet_writing_rhythm', function () {
+  const posts = this.site.posts.toArray().slice().sort((a, b) => a.date - b.date);
+  if (posts.length < 2) return [];
+
+  const min = posts[0].date.valueOf();
+  const max = posts[posts.length - 1].date.valueOf();
+  const span = max - min;
+
+  return posts.map(p => ({
+    title: p.title,
+    path: p.path,
+    date: p.date,
+    percent: span > 0 ? ((p.date.valueOf() - min) / span) * 100 : 50
+  }));
+});

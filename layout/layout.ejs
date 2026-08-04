@@ -1,11 +1,16 @@
 <%
   const extra = theme.extras || {};
   const flags = [
-    extra.copy_code      ? 'copy'   : '',
-    extra.heading_anchor ? 'anchor' : '',
-    extra.external_mark  ? 'ext'    : '',
-    extra.toc            ? 'toc'    : ''
+    extra.copy_code      ? 'copy'     : '',
+    extra.heading_anchor ? 'anchor'   : '',
+    extra.external_mark  ? 'ext'      : '',
+    extra.toc            ? 'toc'      : '',
+    extra.shortcut_panel ? 'shortcut' : ''
   ].filter(Boolean).join(' ');
+
+  // 随机跳转要用到的全站文章路径，首页的"随便看看"和快捷键面板的 Shift+R 共用一份，
+  // 不按 shortcut_panel 单独开关来判断，因为首页那个链接跟这个开关没关系
+  const needPostIndex = extra.shortcut_panel || is_home();
 %><!DOCTYPE html>
 <html lang="<%= config.language || 'en' %>">
 <%- partial('_partial/head') %>
@@ -33,6 +38,14 @@
         <path d="M8 3.6l5.2 5.2-1.1 1.1L8.8 6.8V13h-1.6V6.8L3.9 9.9 2.8 8.8z" fill="currentColor"/>
       </svg>
     </button>
+  <% } %>
+
+  <% if (extra.shortcut_panel) { %>
+    <%- partial('_partial/shortcut-panel') %>
+  <% } %>
+
+  <% if (needPostIndex) { %>
+    <script type="application/json" id="post-index"><%- JSON.stringify(site.posts.toArray().map(p => url_for(p.path))) %></script>
   <% } %>
 
   <script src="<%- url_for('/js/main.js') %>" defer></script>

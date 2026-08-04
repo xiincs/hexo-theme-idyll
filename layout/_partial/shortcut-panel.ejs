@@ -1,0 +1,13 @@
+<%#
+  按住 Shift 呼出的快捷键面板。全站生效（在 layout.ejs 里引入，不是首页专属）。
+  只列这个主题真实存在、且在任意页面都能用的功能 —— 没有搜索，不列搜索；
+  目录只在部分文章页存在，不是"任意页面都能用"，所以也不列。
+%>
+<div class="shortcuts" id="shortcuts" aria-hidden="true">
+  <p class="shortcuts__label"><%= __('shortcuts_label') %></p>
+  <ul class="shortcuts__list">
+    <li><kbd>Shift</kbd><span>+</span><kbd>T</kbd><span class="shortcuts__text"><%= __('shortcut_theme') %></span></li>
+    <li><kbd>Shift</kbd><span>+</span><kbd>H</kbd><span class="shortcuts__text"><%= __('shortcut_home') %></span></li>
+    <li><kbd>Shift</kbd><span>+</span><kbd>R</kbd><span class="shortcuts__text"><%= __('shortcut_random') %></span></li>
+  </ul>
+</div>

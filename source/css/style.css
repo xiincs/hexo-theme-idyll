@@ -3,9 +3,14 @@
 
    设计约束，改动前先读一遍：
    1. 底色是暖白而不是纯白，长时间看不刺眼；文字是墨黑而不是纯黑。
-   2. 全站只有一个强调色。它出现的地方越少，出现时越有意义。
-   3. 层级靠字重、字号和留白拉开，不靠边框和阴影堆。
-   4. 动效一律 ≤ 0.3s，只做位移和透明度，不做缩放弹跳。
+   2. 强调色可以不止一种，但每种颜色都要对应一个具体的东西（比如某个分类），
+      不是随手挑一个好看的颜色去装饰。颜色是用来区分的，不是用来点缀的。
+   3. 层级主要靠字重、字号和留白拉开；卡片这类需要"浮起来"的元素，
+      可以用 --shadow-sm/--shadow-md 这一套统一的柔和阴影（见 §1），
+      两级足够，不要再叠边框、再叠一层阴影去加重。
+   4. 交互动效（悬停、点击反馈）一律 ≤ 0.3s，只做位移和透明度，不做缩放弹跳。
+      首次进入页面的整体入场动效不算在这个时限里，但方向不变：
+      只做位移和透明度，缓动曲线仍然用 --ease，见 §1 的 rise-in。
    5. 不用渐变。任何场景都不用 —— 背景、按钮、文字、阴影，一律纯色。
    ========================================================================== */
 
@@ -65,6 +70,17 @@
   --radius-sm: 5px;
 
   --ease: cubic-bezier(.22, .61, .36, 1);
+
+  /* 卡片层级用的柔和阴影，只有静止/悬停两级。
+     颜色取自 --text 的 rgb 分量，不抄外部的十六进制值，跟全文取色逻辑一致 */
+  --shadow-sm: 0 8px 16px -4px rgba(27, 27, 25, .05);
+  --shadow-md: 0 10px 24px -6px rgba(27, 27, 25, .10);
+}
+
+/* 首次进入页面的错落入场，只做位移和透明度。见 §4 的时限例外说明 */
+@keyframes rise-in {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
 }
 
 /* --- 1.5 暗色 ----------------------------------------------------------- */
@@ -118,6 +134,12 @@
     --syn-delete:  #f0909e;
 
     --img-dim: brightness(.92);
+
+    /* 纯黑阴影在纯黑底上基本看不见，所以不是把同一个黑色阴影调高透明度了事：
+       加一圈极淡的内侧亮边模拟"接住一点光"，配合卡片本身在 :hover 时把
+       border-color 换成 --border-strong 一起承担层级信号，阴影只是次要辅助 */
+    --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, .03), 0 8px 16px -4px rgba(0, 0, 0, .35);
+    --shadow-md: inset 0 1px 0 rgba(255, 255, 255, .05), 0 10px 24px -6px rgba(0, 0, 0, .45);
   }
 }
 
@@ -156,6 +178,9 @@
     --syn-delete:  #f0909e;
 
     --img-dim: brightness(.92);
+
+    --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, .03), 0 8px 16px -4px rgba(0, 0, 0, .35);
+    --shadow-md: inset 0 1px 0 rgba(255, 255, 255, .05), 0 10px 24px -6px rgba(0, 0, 0, .45);
   }
 
   /* 手动切到亮色：告诉浏览器滚动条和表单控件也用亮色 */
@@ -348,12 +373,19 @@ button { font: inherit; color: inherit; }
 
 /* --- 5. 首页开场 -------------------------------------------------------- */
 
-.hero { padding: clamp(60px, 11vw, 112px) 0 clamp(38px, 6vw, 64px); }
+.hero { padding: clamp(32px, 5vw, 48px) 0 clamp(28px, 4vw, 40px); }
+
+.hero__in {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px 40px;
+  align-items: start;
+}
 
 /* 不设 max-width：交给正文列宽约束，再让 balance 去挑断点。
    写死 ch 值会让中英文其中一种断得很难看 */
 .hero__title {
-  font-size: clamp(26px, 4.2vw, 37px);
+  font-size: clamp(24px, 3.6vw, 34px);
   font-weight: 600;
   line-height: 1.32;
   letter-spacing: -.024em;
@@ -361,11 +393,115 @@ button { font: inherit; color: inherit; }
 }
 
 .hero__sub {
-  margin-top: 15px;
+  margin-top: 14px;
   color: var(--text-3);
-  font-size: clamp(15px, 2vw, 17.5px);
-  line-height: 1.65;
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.6;
   text-wrap: pretty;
+}
+
+/* --- 5.1 统计条 ----------------------------------------------------------- */
+
+.hero__stats {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 13.5px;
+  letter-spacing: .01em;
+  font-variant-numeric: tabular-nums;
+}
+.hero__stats .stat-n { color: var(--text); font-weight: 600; }
+
+/* --- 5.2 写作节奏时间轴 ---------------------------------------------------- */
+
+.hero__rhythm {
+  position: relative;
+  height: 2px;
+  margin-top: 20px;
+  background: var(--border);
+  border-radius: 2px;
+}
+.hero__rhythm-dot {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+/* --- 5.3 随便看看 --------------------------------------------------------- */
+
+.hero__random {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  color: var(--accent);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+.hero__random:hover { color: var(--accent-hover); }
+.hero__random span { transition: transform .2s var(--ease); }
+.hero__random:hover span { transform: translateX(3px); }
+
+/* --- 5.4 分类速览卡片 ------------------------------------------------------ */
+
+.hero__cats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cat-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3px;
+  min-height: 92px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  animation: rise-in .6s var(--ease) backwards;
+}
+.cat-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+  box-shadow: var(--shadow-md);
+  color: var(--text);
+}
+
+/* 分类名首字，超大、极淡、斜放在卡片背景里，平时是纹理，悬停才稍微聚焦一点。
+   全站统一 15deg，不要每张卡各转各的角度 */
+.cat-card__deco {
+  position: absolute;
+  z-index: 0;
+  top: -.1em;
+  right: -.04em;
+  font-size: 5.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+  opacity: .08;
+  transform: rotate(15deg);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+  pointer-events: none;
+}
+.cat-card:hover .cat-card__deco { opacity: .16; transform: rotate(10deg); }
+
+.cat-card__name { position: relative; z-index: 1; font-size: 15.5px; font-weight: 600; }
+.cat-card__n    { position: relative; z-index: 1; font-size: 12.5px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+.hero__title, .hero__sub, .hero__stats, .hero__rhythm, .hero__random {
+  animation: rise-in .6s var(--ease) backwards;
 }
 
 /* --- 6. 内页抬头 -------------------------------------------------------- */
@@ -772,7 +908,7 @@ button { font: inherit; color: inherit; }
 }
 .prose th { background: var(--bg-soft); font-weight: 600; }
 
-.prose kbd {
+.prose kbd, .shortcuts__list kbd {
   padding: 2px 6px;
   border: 1px solid var(--border-strong);
   border-bottom-width: 2px;
@@ -1073,6 +1209,41 @@ figure.highlight .strong     { font-weight: 600; }
 .totop.is-on { opacity: 1; visibility: visible; transform: none; }
 .totop:hover { color: var(--accent); border-color: var(--accent); }
 
+/* 按住 Shift 呼出，跟 .totop 是同一套浮层语言（float-bg + blur），
+   放左下角跟 .totop 错开，两个都出现时不会叠在一起 */
+.shortcuts {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 45;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--float-bg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+  pointer-events: none;
+}
+.shortcuts.is-on { opacity: 1; visibility: visible; transform: none; }
+
+.shortcuts__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 9px;
+}
+
+.shortcuts__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.shortcuts__list li { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-2); white-space: nowrap; }
+.shortcuts__text { margin-left: 3px; }
+
 /* --- 17. 窄屏 ----------------------------------------------------------- */
 
 @media (max-width: 720px) {
@@ -1101,10 +1272,15 @@ figure.highlight .strong     { font-weight: 600; }
   .foot__in { flex-direction: column; align-items: flex-start; }
 
   .totop { right: 14px; bottom: 14px; }
+  .shortcuts { left: 14px; bottom: 14px; }
+
+  .hero { padding: 24px 0 28px; }
+  .hero__in { grid-template-columns: 1fr; gap: 28px; }
 }
 
 @media (max-width: 400px) {
   .nav__name { display: none; }
+  .hero__cats { grid-template-columns: 1fr; }
 }
 
 /* --- 18. 无障碍与打印 --------------------------------------------------- */
@@ -1123,7 +1299,7 @@ figure.highlight .strong     { font-weight: 600; }
 @media print {
   :root { --fs-base: 11.5pt; }
   .nav, .foot, .totop, .progress, .pager, .nextprev, .copy, .skip, .item__arrow,
-  .toc, .related, .comments { display: none !important; }
+  .toc, .related, .comments, .shortcuts { display: none !important; }
   body { background: #fff; color: #000; }
   .wrap { max-width: none; padding: 0; }
   .prose a { color: #000; text-decoration: underline; }

@@ -22,6 +22,7 @@ post:
   show_reading_time: true
   show_word_count: true  # 文章页显示字数（中文按字、西文按词）
   related_count: 3       # 相关文章最多显示几篇
+  hero_category_count: 3 # 首页分类速览卡片最多显示几个（按文章数从多到少取）
 
 # 评论：接的是 giscus（基于 GitHub Discussions，免费、无追踪）。
 # repo 留空就完全不渲染评论区，不用额外开关去关它。
@@ -60,3 +61,4 @@ extras:
   theme_toggle: true     # 顶栏主题切换按钮：跟随系统 / 亮 / 暗
   toc: true              # 文章内目录，窄屏和标题太少（<2个）时自动不出现
   related_posts: true    # 文章末尾按标签/分类推荐相关文章
+  shortcut_panel: true   # 按住 Shift 呼出的快捷键面板（切换主题/回首页/随机文章）

@@ -1,0 +1,48 @@
+<%#
+  首页 hero：左区标题 + 统计 + 写作节奏 + 随便看看，右区分类速览卡片。
+  只在首页第一页调用（见 index.ejs 的 first && heading 判断），locals 由调用方显式传入，
+  这里不直接摸 site/theme —— 跟 related.ejs/toc.ejs 是同一个规矩。
+
+  统计条用 %s 而不是 %d 占位：传进去的是包好 <span data-count> 的 HTML 片段，
+  这样数字能单独被 JS 抓出来做滚动动画，中英文的语序（"运行 N 天" vs "N days running"）
+  还是由翻译字符串自己决定，不会被拼接坏。
+%>
+<%
+  const numSpan = (n) => `<span class="stat-n" data-count="${n}">0</span>`;
+%>
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__main">
+      <h1 class="hero__title" style="animation-delay:0ms"><%- heading %></h1>
+      <% if (sub) { %><p class="hero__sub" style="animation-delay:60ms"><%- sub %></p><% } %>
+
+      <p class="hero__stats" style="animation-delay:120ms">
+        <%- __('hero_stats', numSpan(stats.postCount), numSpan(stats.categoryCount), numSpan(stats.days), numSpan(stats.words)) %>
+      </p>
+
+      <% if (rhythm.length) { %>
+        <div class="hero__rhythm" style="animation-delay:160ms" aria-hidden="true">
+          <% rhythm.forEach(p => { %>
+            <span class="hero__rhythm-dot" style="left:<%= p.percent.toFixed(2) %>%"></span>
+          <% }); %>
+        </div>
+      <% } %>
+
+      <a class="hero__random" id="hero-random" href="<%- url_for('/archives/') %>" style="animation-delay:200ms">
+        <%= __('random_post') %> <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <% if (categories.length) { %>
+      <div class="hero__cats" style="animation-delay:100ms">
+        <% categories.forEach((cat, i) => { %>
+          <a class="cat-card" href="<%- url_for(cat.path) %>" style="animation-delay:<%= 140 + i * 50 %>ms">
+            <span class="cat-card__deco" aria-hidden="true"><%= cat.name.charAt(0) %></span>
+            <span class="cat-card__name"><%= cat.name %></span>
+            <span class="cat-card__n"><%= _p('post_count', cat.length) %></span>
+          </a>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</section>

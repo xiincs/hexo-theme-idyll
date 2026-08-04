@@ -19,6 +19,12 @@ updated_on: Updated
 toc: Contents
 related_posts: Related posts
 comments: Comments
+hero_stats: '%s posts · %s categories · %s days running · %s words'
+random_post: Random post
+shortcuts_label: Shortcuts
+shortcut_theme: Toggle theme
+shortcut_home: Go home
+shortcut_random: Random post
 
 newer: Newer
 older: Older

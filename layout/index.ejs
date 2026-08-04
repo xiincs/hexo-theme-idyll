@@ -3,15 +3,24 @@
   const heading = hero.title    || config.title;
   const sub     = hero.subtitle || config.subtitle;
   const first   = page.current <= 1;
+
+  // 分类速览：按篇数降序，最多取前 N 个（见 theme._config.yml 的 post.hero_category_count），
+  // 跟 categories.ejs 用的是同一份 site.categories，只是这里要按篇数排序而不是按名字，
+  // 所以转成数组后用 JS 自己排，不依赖 warehouse 的排序参数
+  const heroCatLimit = Number((theme.post || {}).hero_category_count) > 0 ? Number(theme.post.hero_category_count) : 3;
+  const heroCategories = first
+    ? site.categories.toArray().filter(c => c.length > 0).sort((a, b) => b.length - a.length).slice(0, heroCatLimit)
+    : [];
 %>
 
 <% if (first && heading) { %>
-  <section class="hero">
-    <div class="wrap">
-      <h1 class="hero__title"><%- heading %></h1>
-      <% if (sub) { %><p class="hero__sub"><%- sub %></p><% } %>
-    </div>
-  </section>
+  <%- partial('_partial/hero', {
+    heading,
+    sub,
+    stats: quiet_site_stats(),
+    categories: heroCategories,
+    rhythm: quiet_writing_rhythm()
+  }) %>
 <% } %>
 
 <section class="wrap<%= (first && heading) ? '' : ' wrap--top' %>">
