@@ -206,7 +206,10 @@
     Array.prototype.forEach.call(statNums, function (el) {
       var target = parseInt(el.getAttribute('data-count'), 10) || 0;
 
-      if (reducedNum || !target) {
+      /* 减少动效，或者标签页当前不在前台（比如后台打开的新标签），直接显示终值。
+         不可见的标签页里 requestAnimationFrame 会被浏览器限流甚至完全不触发，
+         硬等下去数字就永远停在初始的 0，用户切回来也看不到正确的数 */
+      if (reducedNum || !target || document.hidden) {
         el.textContent = target.toLocaleString('en-US');
         return;
       }
@@ -215,6 +218,7 @@
       var duration = 900;
 
       function tick(ts) {
+        if (document.hidden) { el.textContent = target.toLocaleString('en-US'); return; }
         if (start === null) start = ts;
         var progress = Math.min(1, (ts - start) / duration);
         var eased = 1 - Math.pow(1 - progress, 3); // 先快后慢
