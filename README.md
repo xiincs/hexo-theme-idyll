@@ -8,26 +8,15 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-A [Hexo](https://hexo.io/) theme built around one idea: get out of the way of the text. Just a stylesheet, semantic HTML, and a handful of scripts that do nothing unless you switch them on — no framework, no build step, no client-side router.
+Some blogs feel like walking into an over-decorated living room. The theme is shouting, the plugins are fighting each other, and the words you actually came to read are pressed into a corner, gasping for space.
+
+idyll is the other thing.
+
+It's a room that faces south — light on the desk, trees outside the window. You sit down, and a word is just a word, a paragraph just a paragraph. Nothing else is competing for your attention.
+
+The name comes from *idyll* — an old word for a peaceful scene, the kind nobody staged, that just grew that way on its own. We weren't chasing the coolest theme out there. Just one you could write in for ten years and never once find loud.
 
 ![idyll screenshot](screenshot.png)
-
-## Design principles
-
-- Background sits a shade warmer than white, text a shade softer than black. Small difference — you feel it by the tenth paragraph, not the first.
-- Color has to earn its place. If a tag or a category gets one, it's doing a job, not just sitting there looking nice.
-- Hierarchy comes from weight, size, and space before it comes from shadows. When something does need to lift off the page, it gets one of two shadow levels and never more.
-
-## Features
-
-- Bento-grid about page: identity card, bio, skills, and site stats in one layout
-- Reading time, word count (CJK- and Latin-aware), and a scroll progress bar
-- Auto-generated table of contents and tag-based related posts
-- Light / dark / system theme toggle, persisted across visits
-- [giscus](https://giscus.app/) comments (GitHub Discussions-backed, free, no tracking)
-- Keyboard shortcut panel (hold <kbd>Shift</kbd> for theme toggle / home / random post)
-- Copy-to-clipboard code blocks, heading anchors, external-link markers
-- Every line above is a config flag. Don't want it? Turn it off.
 
 ## Requirements
 
@@ -42,17 +31,19 @@ git clone https://github.com/xiincs/hexo-theme-idyll.git themes/idyll
 cd themes/idyll && npm install
 ```
 
-The theme uses [cheerio](https://cheerio.js.org/) to build the table of contents; the `npm install` step above pulls it in locally so you don't need to add it to your site's own `package.json`.
-
-Set the theme in your site's `_config.yml`:
+Then in your site's `_config.yml`:
 
 ```yaml
 theme: idyll
 ```
 
+That's it. No build step, no framework dependency, no client-side router. The extra bit that lands in the theme folder is just there to help arrange the text more nicely.
+
 ## Configuration
 
-All configuration lives in `themes/idyll/_config.yml`. Highlights:
+Open `themes/idyll/_config.yml`. Every option lives there, and the comments run longer than the code — you shouldn't need much more from me.
+
+If you want a taste of it:
 
 ```yaml
 hero:
@@ -64,31 +55,31 @@ about:
   avatar: "https://example.com/avatar.png"
   bio: |
     A short bio, one paragraph per line break.
-  skills:
-    - JavaScript
-    - Python
-
-comment:
-  giscus:
-    repo: "user/repo"
-    repo_id: ""
-    category: "Announcements"
-    category_id: ""
-
-extras:
-  scroll_progress: true
-  back_to_top: true
-  copy_code: true
-  heading_anchor: true
-  external_mark: true
-  theme_toggle: true
-  toc: true
-  related_posts: true
-  shortcut_panel: true
 ```
 
-See the comments in `_config.yml` for the full list of options.
+Everything else — just read down the file.
 
-## License
+## What it does, and doesn't
 
-[MIT](LICENSE)
+Does:
+
+- Gives the text room to breathe. Line height, paragraph spacing, margins — all tuned so your eyes aren't tired by the tenth paragraph.
+- Dark mode. The kind you get from a desk lamp at midnight.
+- Code-block copy, heading anchors, a reading progress bar — small things, on by default, one line each to switch off.
+- Comments, giscus, related-post suggestions. All optional, all quiet until you turn them on.
+
+Doesn't:
+
+- No masonry grid, no stacked cards, no "visual impact."
+- No thirty-seven social icons lined up in the header.
+- No animation that exists just to show off.
+
+If those "doesn't" are exactly what you're looking for, this probably isn't your theme. That's fine — there are plenty of others.
+
+## Finally
+
+I wrote this theme for myself. If you like it too, that's a nice surprise.
+
+Got a problem? Open an [issue](https://github.com/xiincs/hexo-theme-idyll/issues). No need to be formal about it — but no need to be rude either.
+
+[MIT](LICENSE) licensed. Use it, change it, don't ask.
