@@ -16,30 +16,34 @@
 <section class="wrap about">
   <div class="about__grid">
     <div class="card card--id">
-      <% if (about.avatar) { %>
-        <img class="about__avatar" src="<%- url_for(about.avatar) %>" alt="<%= name %>" width="64" height="64">
-      <% } else if (name) { %>
-        <span class="about__avatar about__avatar--fallback" aria-hidden="true"><%= name.charAt(0) %></span>
-      <% } %>
+      <% if (name) { %><span class="about__deco" aria-hidden="true"><%= name.charAt(0) %></span><% } %>
 
-      <% if (name) { %><h2 class="about__name"><%= name %></h2><% } %>
-      <% if (about.title) { %><p class="about__title"><%= about.title %></p><% } %>
-      <% if (about.location) { %>
-        <p class="about__location">
-          <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M8 1.2c-2.65 0-4.8 2.1-4.8 4.86 0 3.6 4.8 8.75 4.8 8.75s4.8-5.15 4.8-8.75c0-2.76-2.15-4.86-4.8-4.86zm0 6.7a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8z"/>
-          </svg>
-          <%= about.location %>
-        </p>
-      <% } %>
+      <div class="about__id-content">
+        <% if (about.avatar) { %>
+          <img class="about__avatar" src="<%- url_for(about.avatar) %>" alt="<%= name %>" width="88" height="88">
+        <% } else if (name) { %>
+          <span class="about__avatar about__avatar--fallback" aria-hidden="true"><%= name.charAt(0) %></span>
+        <% } %>
 
-      <% if ((theme.social && Object.keys(theme.social).length)) { %>
-        <div class="about__social">
-          <% for (const key in theme.social) { %>
-            <a class="pill pill--link" href="<%- theme.social[key] %>" target="_blank" rel="noopener"><%= key %></a>
-          <% } %>
-        </div>
-      <% } %>
+        <% if (name) { %><h2 class="about__name"><%= name %></h2><% } %>
+        <% if (about.title) { %><p class="about__title"><%= about.title %></p><% } %>
+        <% if (about.location) { %>
+          <p class="about__location">
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M8 1.2c-2.65 0-4.8 2.1-4.8 4.86 0 3.6 4.8 8.75 4.8 8.75s4.8-5.15 4.8-8.75c0-2.76-2.15-4.86-4.8-4.86zm0 6.7a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8z"/>
+            </svg>
+            <%= about.location %>
+          </p>
+        <% } %>
+
+        <% if ((theme.social && Object.keys(theme.social).length)) { %>
+          <div class="about__social">
+            <% for (const key in theme.social) { %>
+              <a class="pill pill--link" href="<%- theme.social[key] %>" target="_blank" rel="noopener"><%= key %></a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
     </div>
 
     <% if (about.bio) { %>
@@ -52,18 +56,27 @@
       <div class="card card--skills">
         <h3 class="card__label"><%= __('about_skills') %></h3>
         <div class="about__skills">
-          <% about.skills.forEach(skill => { %><span class="pill"><%= skill %></span><% }) %>
+          <% about.skills.forEach(skill => { %><span class="skill"><%= skill %></span><% }) %>
         </div>
       </div>
     <% } %>
 
     <div class="card card--stats">
       <h3 class="card__label"><%= __('about_stats') %></h3>
-      <dl class="about__stats">
-        <div><dt><%= __('archive') %></dt><dd><%= _p('post_count', stats.postCount) %></dd></div>
-        <div><dt><%= __('categories') %></dt><dd><%= _p('category_count', stats.categoryCount) %></dd></div>
-        <div><dt><%= __('words') %></dt><dd><%= stats.words %></dd></div>
-      </dl>
+      <div class="about__stats">
+        <div class="about__stat">
+          <span class="about__stat-n stat-n" data-count="<%= stats.postCount %>">0</span>
+          <span class="about__stat-label"><%= __('archive') %></span>
+        </div>
+        <div class="about__stat">
+          <span class="about__stat-n stat-n" data-count="<%= stats.categoryCount %>">0</span>
+          <span class="about__stat-label"><%= __('categories') %></span>
+        </div>
+        <div class="about__stat">
+          <span class="about__stat-n stat-n" data-count="<%= stats.words %>">0</span>
+          <span class="about__stat-label"><%= __('words') %></span>
+        </div>
+      </div>
     </div>
   </div>
 

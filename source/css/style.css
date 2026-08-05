@@ -1291,7 +1291,7 @@ figure.highlight .strong     { font-weight: 600; }
   animation: rise-in .6s var(--ease) backwards;
 }
 
-.card--id     { grid-area: id; }
+.card--id     { grid-area: id; position: relative; overflow: hidden; }
 .card--bio    { grid-area: bio; }
 .card--skills { grid-area: skills; }
 .card--stats  { grid-area: stats; }
@@ -1309,24 +1309,43 @@ figure.highlight .strong     { font-weight: 600; }
   margin-bottom: 14px;
 }
 
-/* 身份卡 */
+/* 身份卡：姓名首字当背景纹理，跟首页分类速览卡片（.cat-card__deco）是同一个手法，
+   全站只有这一处「大字做装饰」的语言，两处保持同一个角度/透明度，才像是同一套设计 */
+.about__deco {
+  position: absolute;
+  z-index: 0;
+  top: -.06em;
+  right: -.03em;
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+  opacity: .07;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+/* 真正的内容叠在装饰字上面，见 .about__deco 同一段注释里的堆叠原理 */
+.about__id-content { position: relative; z-index: 1; }
+
 .about__avatar {
-  width: 64px;
-  height: 64px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 0 0 3px var(--bg);
 }
 .about__avatar--fallback {
   display: grid;
   place-items: center;
   background: var(--accent-wash);
   color: var(--accent);
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
 }
 
-.about__name  { margin-top: 16px; font-size: 19px; letter-spacing: -.014em; }
-.about__title { margin-top: 4px; color: var(--text-2); font-size: 14.5px; line-height: 1.5; }
+.about__name  { margin-top: 18px; font-size: 23px; font-weight: 700; letter-spacing: -.016em; }
+.about__title { margin-top: 5px; color: var(--text-2); font-size: 14.5px; line-height: 1.5; }
 
 .about__location {
   display: flex;
@@ -1340,24 +1359,45 @@ figure.highlight .strong     { font-weight: 600; }
 .about__social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
 /* 自述：card 里嵌一份 .prose，字号比正文稍小，跟卡片的克制感一致 */
-.card--bio.prose { color: var(--text-2); font-size: 15px; }
+.card--bio.prose { color: var(--text-2); font-size: 15.5px; }
 .card--bio.prose > * + * { margin-top: .9em; }
+.card--bio.prose > :first-child { font-size: 1.05em; color: var(--text); }
 
 .about__skills { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* 技能标签：实底而不是描边，跟标签云的 .pill 拉开一点差别 ——
+   同一个 chip 形状用在两处会让「技能」看起来像随手打的标签，不是有意整理过的清单 */
+.skill {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* 数据条：跟首页 hero 统计是同一套「大数字 + 小标签」，数字还共用同一个
+   滚动计数动画（见 main.js 的 .stat-n[data-count] 选择器，不分页面全局生效） */
 .about__stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  margin: 0;
 }
-.about__stats dt { font-size: 12.5px; color: var(--text-3); }
-.about__stats dd {
-  margin: 4px 0 0;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -.012em;
+
+.about__stat-n {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.016em;
   font-variant-numeric: tabular-nums;
+}
+.about__stat-label {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-3);
+  font-size: 12.5px;
 }
 
 .about__extra { margin-top: 40px; }
