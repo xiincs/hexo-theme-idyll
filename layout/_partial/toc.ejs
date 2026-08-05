@@ -1,6 +1,6 @@
 <%#
   文章内目录。调用方只在标题数 ≥ 2 时才应该输出这个 partial（见 post.ejs）。
-  tocItems 参数是 quiet_toc() 返回的嵌套结构：[{ id, text, children: [...] }]
+  tocItems 参数是 idyll_toc() 返回的嵌套结构：[{ id, text, children: [...] }]
 
   局部变量特意不叫 toc —— hexo 核心自带一个同名内置 helper（见 node_modules/hexo/dist/plugins/helper/toc.js）。
   调用方那层用 const 能把它词法遮蔽掉，但 locals 穿过 partial() 边界时会按

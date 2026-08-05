@@ -28,7 +28,7 @@
         <div class="item__body">
           <h2 class="item__title"><%= post.title || __('untitled') %><span class="item__arrow" aria-hidden="true">→</span></h2>
 
-          <% const summary = quiet_excerpt(post, opts.excerpt_length); %>
+          <% const summary = idyll_excerpt(post, opts.excerpt_length); %>
           <% if (summary) { %><p class="item__desc"><%= summary %></p><% } %>
 
           <% if (tags.length) { %>

@@ -16,7 +16,7 @@
     title = [page.title, site].filter(Boolean).join(' · ');
   }
 
-  if (!desc && is_post()) desc = quiet_excerpt(page, 150);
+  if (!desc && is_post()) desc = idyll_excerpt(page, 150);
 %>
 <head>
   <meta charset="utf-8">
@@ -30,7 +30,7 @@
   <script>
     (function () {
       var root = document.documentElement;
-      var key  = 'quiet-theme';
+      var key  = 'idyll-theme';
 
       root.classList.add('js');
 
@@ -74,7 +74,7 @@
           } catch (err) {}
 
           <%# 评论区（giscus）跟着一起切主题，靠这个事件通知 main.js %>
-          document.dispatchEvent(new CustomEvent('quiet:theme', { detail: mode || 'auto' }));
+          document.dispatchEvent(new CustomEvent('idyll:theme', { detail: mode || 'auto' }));
         }
 
         btn.addEventListener('click', function () {

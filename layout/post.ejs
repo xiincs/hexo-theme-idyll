@@ -3,8 +3,8 @@
   const extra = theme.extras || {};
   const tags  = page.tags && page.tags.length ? page.tags.toArray() : [];
   const cats  = page.categories && page.categories.length ? page.categories.toArray() : [];
-  const mins  = quiet_readtime(page.content, opts.reading_speed);
-  const words = quiet_wordcount(page.content);
+  const mins  = idyll_readtime(page.content, opts.reading_speed);
+  const words = idyll_wordcount(page.content);
   const edited = page.updated && page.date &&
                  date(page.updated, 'YYYY-MM-DD') !== date(page.date, 'YYYY-MM-DD');
 
@@ -12,9 +12,9 @@
   // 这里数的是 h2+h3 的总数，不能只看 tocItems.length —— 那是顶层 h2 的个数，
   // 只有一个 h2、底下挂几个 h3 的文章（比如这种一节分几步的写法）会被数成 1 条
   // 变量不能叫 toc —— hexo 自己注册了同名内置 helper，传进 partial 时会被那个覆盖掉
-  const tocItems = extra.toc ? quiet_toc(page.content) : [];
+  const tocItems = extra.toc ? idyll_toc(page.content) : [];
   const tocCount = tocItems.reduce((n, h2) => n + 1 + h2.children.length, 0);
-  const related  = extra.related_posts ? quiet_related(page, opts.related_count) : [];
+  const related  = extra.related_posts ? idyll_related(page, opts.related_count) : [];
 %>
 
 <article class="post">

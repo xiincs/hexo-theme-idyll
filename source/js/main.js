@@ -1,15 +1,15 @@
 /* ----------------------------------------------------------------------------
-   quiet — 前端脚本
+   idyll — 前端脚本
 
    没有依赖，全部是渐进增强：脚本不执行页面依然可读可用。
-   每块功能都由 <body data-quiet> 里的开关控制，对应主题 _config.yml 的 extras。
+   每块功能都由 <body data-idyll> 里的开关控制，对应主题 _config.yml 的 extras。
    -------------------------------------------------------------------------- */
 
 (function () {
   'use strict';
 
   var body  = document.body;
-  var flags = (body.getAttribute('data-quiet') || '').split(' ');
+  var flags = (body.getAttribute('data-idyll') || '').split(' ');
   var on    = function (name) { return flags.indexOf(name) !== -1; };
 
   /* 滚动相关的活儿合并到一个 rAF 里，避免多个 scroll 监听各自触发重排 */
@@ -184,7 +184,7 @@
   }
 
   /* 页面开着评论区时手动切主题，立刻同步 */
-  document.addEventListener('quiet:theme', function (e) { syncGiscusTheme(e.detail); });
+  document.addEventListener('idyll:theme', function (e) { syncGiscusTheme(e.detail); });
 
   /* giscus 的 iframe 是异步插进来的，加载完成时它自己会广播一条消息。
      借这条消息补一次同步：如果打开页面前就已经手动切到某个主题，

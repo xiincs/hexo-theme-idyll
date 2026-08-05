@@ -16,7 +16,7 @@
   <% } else { %>
     <div class="cloud">
       <% tags.forEach(tag => { %>
-        <a class="cloud__tag cloud__tag--<%= quiet_tagstep(tag.length, max) %>" href="<%- url_for(tag.path) %>">
+        <a class="cloud__tag cloud__tag--<%= idyll_tagstep(tag.length, max) %>" href="<%- url_for(tag.path) %>">
           <%= tag.name %><span class="cloud__n"><%= tag.length %></span>
         </a>
       <% }); %>
