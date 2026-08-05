@@ -10,6 +10,8 @@
 
 A quiet, readable [Hexo](https://hexo.io/) theme for personal blogs. No JS framework, no build step — just semantic HTML, one stylesheet, and a handful of progressive-enhancement scripts.
 
+![idyll screenshot](screenshot.png)
+
 ## Design principles
 
 - Warm white background instead of pure white, ink black instead of pure black — easier on the eyes over long reading sessions.
