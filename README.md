@@ -8,15 +8,15 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-A quiet, readable [Hexo](https://hexo.io/) theme for personal blogs. No JS framework, no build step — just semantic HTML, one stylesheet, and a handful of progressive-enhancement scripts.
+A [Hexo](https://hexo.io/) theme built around one idea: get out of the way of the text. Just a stylesheet, semantic HTML, and a handful of scripts that do nothing unless you switch them on — no framework, no build step, no client-side router.
 
 ![idyll screenshot](screenshot.png)
 
 ## Design principles
 
-- Warm white background instead of pure white, ink black instead of pure black — easier on the eyes over long reading sessions.
-- Accent colors are tied to meaning (e.g. a specific category), never used purely for decoration.
-- Hierarchy comes from weight, size, and whitespace first; shadows are a last resort, capped at two levels.
+- Background sits a shade warmer than white, text a shade softer than black. Small difference — you feel it by the tenth paragraph, not the first.
+- Color has to earn its place. If a tag or a category gets one, it's doing a job, not just sitting there looking nice.
+- Hierarchy comes from weight, size, and space before it comes from shadows. When something does need to lift off the page, it gets one of two shadow levels and never more.
 
 ## Features
 
@@ -27,7 +27,7 @@ A quiet, readable [Hexo](https://hexo.io/) theme for personal blogs. No JS frame
 - [giscus](https://giscus.app/) comments (GitHub Discussions-backed, free, no tracking)
 - Keyboard shortcut panel (hold <kbd>Shift</kbd> for theme toggle / home / random post)
 - Copy-to-clipboard code blocks, heading anchors, external-link markers
-- Everything above is a config flag — turn off what you don't want
+- Every line above is a config flag. Don't want it? Turn it off.
 
 ## Requirements
 
