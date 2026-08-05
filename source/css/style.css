@@ -1269,6 +1269,99 @@ figure.highlight .strong     { font-weight: 600; }
 .shortcuts__list li { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-2); white-space: nowrap; }
 .shortcuts__text { margin-left: 3px; }
 
+/* --- 16.5 关于页 --------------------------------------------------------- */
+
+/* bento 网格：身份卡占左列两行，自述和技能占右列上下，数据条贯穿底部整行 */
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  grid-template-areas:
+    "id     bio"
+    "id     skills"
+    "stats  stats";
+  gap: 16px;
+}
+
+.card {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  animation: rise-in .6s var(--ease) backwards;
+}
+
+.card--id     { grid-area: id; }
+.card--bio    { grid-area: bio; }
+.card--skills { grid-area: skills; }
+.card--stats  { grid-area: stats; }
+
+.card--bio    { animation-delay: 60ms; }
+.card--skills { animation-delay: 100ms; }
+.card--stats  { animation-delay: 140ms; }
+
+.card__label {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+
+/* 身份卡 */
+.about__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.about__avatar--fallback {
+  display: grid;
+  place-items: center;
+  background: var(--accent-wash);
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.about__name  { margin-top: 16px; font-size: 19px; letter-spacing: -.014em; }
+.about__title { margin-top: 4px; color: var(--text-2); font-size: 14.5px; line-height: 1.5; }
+
+.about__location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 14px;
+  color: var(--text-3);
+  font-size: 13.5px;
+}
+
+.about__social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+/* 自述：card 里嵌一份 .prose，字号比正文稍小，跟卡片的克制感一致 */
+.card--bio.prose { color: var(--text-2); font-size: 15px; }
+.card--bio.prose > * + * { margin-top: .9em; }
+
+.about__skills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 0;
+}
+.about__stats dt { font-size: 12.5px; color: var(--text-3); }
+.about__stats dd {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.012em;
+  font-variant-numeric: tabular-nums;
+}
+
+.about__extra { margin-top: 40px; }
+
 /* --- 17. 窄屏 ----------------------------------------------------------- */
 
 @media (max-width: 720px) {
@@ -1301,6 +1394,12 @@ figure.highlight .strong     { font-weight: 600; }
 
   .hero { padding: 24px 0 28px; }
   .hero__in { grid-template-columns: 1fr; gap: 28px; }
+
+  .about__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "id" "bio" "skills" "stats";
+  }
+  .about__stats { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 400px) {

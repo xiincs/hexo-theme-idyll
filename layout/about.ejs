@@ -1,0 +1,71 @@
+<%#
+  关于页：身份卡 + 自述 + 技能 + 数据，四块拼成一个 bento 网格。
+  内容全部来自 theme.about（见 _config.yml），改简介不用碰这个模板。
+%>
+<%
+  const about = theme.about || {};
+  const name  = about.name || config.author || '';
+  const stats = quiet_site_stats();
+%>
+
+<section class="wrap page-head">
+  <h1 class="page-head__title"><%= page.title || __('menu.about') %></h1>
+  <% if (about.subtitle) { %><p class="page-head__meta"><%= about.subtitle %></p><% } %>
+</section>
+
+<section class="wrap about">
+  <div class="about__grid">
+    <div class="card card--id">
+      <% if (about.avatar) { %>
+        <img class="about__avatar" src="<%- url_for(about.avatar) %>" alt="<%= name %>" width="64" height="64">
+      <% } else if (name) { %>
+        <span class="about__avatar about__avatar--fallback" aria-hidden="true"><%= name.charAt(0) %></span>
+      <% } %>
+
+      <% if (name) { %><h2 class="about__name"><%= name %></h2><% } %>
+      <% if (about.title) { %><p class="about__title"><%= about.title %></p><% } %>
+      <% if (about.location) { %>
+        <p class="about__location">
+          <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M8 1.2c-2.65 0-4.8 2.1-4.8 4.86 0 3.6 4.8 8.75 4.8 8.75s4.8-5.15 4.8-8.75c0-2.76-2.15-4.86-4.8-4.86zm0 6.7a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8z"/>
+          </svg>
+          <%= about.location %>
+        </p>
+      <% } %>
+
+      <% if ((theme.social && Object.keys(theme.social).length)) { %>
+        <div class="about__social">
+          <% for (const key in theme.social) { %>
+            <a class="pill pill--link" href="<%- theme.social[key] %>" target="_blank" rel="noopener"><%= key %></a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+
+    <% if (about.bio) { %>
+      <div class="card card--bio prose">
+        <%- about.bio.split(/\n\s*\n/).map(p => `<p>${p.trim()}</p>`).join('') %>
+      </div>
+    <% } %>
+
+    <% if (about.skills && about.skills.length) { %>
+      <div class="card card--skills">
+        <h3 class="card__label"><%= __('about_skills') %></h3>
+        <div class="about__skills">
+          <% about.skills.forEach(skill => { %><span class="pill"><%= skill %></span><% }) %>
+        </div>
+      </div>
+    <% } %>
+
+    <div class="card card--stats">
+      <h3 class="card__label"><%= __('about_stats') %></h3>
+      <dl class="about__stats">
+        <div><dt><%= __('archive') %></dt><dd><%= _p('post_count', stats.postCount) %></dd></div>
+        <div><dt><%= __('categories') %></dt><dd><%= _p('category_count', stats.categoryCount) %></dd></div>
+        <div><dt><%= __('words') %></dt><dd><%= stats.words %></dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <% if (page.content) { %><div class="prose about__extra"><%- page.content %></div><% } %>
+</section>

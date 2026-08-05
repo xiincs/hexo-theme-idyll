@@ -3,6 +3,7 @@ menu:
   archive: 归档
   categories: 分类
   tags: 标签
+  about: 关于
 
 nav_label: 站点导航
 skip_to_content: 跳到正文
@@ -61,3 +62,6 @@ empty_tags: 还没有标签。
 not_found_title: 这一页安静下来了
 not_found_text: 链接可能失效了，或者这页已经搬走。都不怪你。
 not_found_home: 回首页
+
+about_skills: 技能
+about_stats: 一些数字

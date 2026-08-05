@@ -3,6 +3,7 @@ menu:
   archive: Archive
   categories: Categories
   tags: Tags
+  about: About
 
 nav_label: Site navigation
 skip_to_content: Skip to content
@@ -61,3 +62,6 @@ empty_tags: No tags yet.
 not_found_title: This page went quiet
 not_found_text: The link is broken, or the page moved on. Neither is your fault.
 not_found_home: Take me home
+
+about_skills: Skills
+about_stats: In numbers

@@ -9,19 +9,42 @@ menu:
   archive: /archives/
   categories: /categories/
   tags: /tags/
+  about: /about/
 
 # 首页开场白。title 留空即可整块隐藏。
 hero:
-  title: '把想清楚的事情，写下来。'
-  subtitle: '关于代码、工具，以及一些还没想明白的日常。'
+  title: "把想清楚的事情，写下来。"
+  subtitle: "关于代码、工具，以及一些还没想明白的日常。"
+
+# 关于页（/about/）。name 留空即整个身份卡退回到 config.author。
+# 这块内容跟 menu 分开管，因为改简介不该动导航结构。
+about:
+  name: "xiin" # 留空则用 config.author
+  title: "大三在读" # 留空则不显示
+  subtitle: "my site & me" # 标题下面的副标题，跟分类页"3 categories"是同一个位置，留空不显示
+  avatar: "https://avatars.githubusercontent.com/u/181250834?s=60&v=4" # 头像图片路径，留空显示名字首字
+  location: "济南, 山东" # 留空则不显示
+  bio: |
+    前路浩浩荡荡，万事尽可期待...
+  skills:
+    - Java
+    - Python
+    - JavaScript
+    - TypeScript
+    - CSS
+    - HTML
+    - Vue
+    - React
+    - Git
+    - Docker
 
 # 列表与正文
 post:
-  excerpt_length: 110    # 列表里摘要截断的字数
-  reading_speed: 300     # 每分钟阅读字数，用来估算阅读时间
+  excerpt_length: 110 # 列表里摘要截断的字数
+  reading_speed: 300 # 每分钟阅读字数，用来估算阅读时间
   show_reading_time: true
-  show_word_count: true  # 文章页显示字数（中文按字、西文按词）
-  related_count: 3       # 相关文章最多显示几篇
+  show_word_count: true # 文章页显示字数（中文按字、西文按词）
+  related_count: 3 # 相关文章最多显示几篇
   hero_category_count: 3 # 首页分类速览卡片最多显示几个（按文章数从多到少取）
 
 # 评论：接的是 giscus（基于 GitHub Discussions，免费、无追踪）。
@@ -33,19 +56,19 @@ post:
 #   3. 打开 https://giscus.app，按提示填好仓库名，页面会生成下面这些值
 comment:
   giscus:
-    repo: ''          # 形如 'xiincs/xiin-blog'
-    repo_id: ''        # giscus.app 生成
-    category: 'Announcements'  # Discussions 的分类名，giscus.app 页面上能选
-    category_id: ''    # giscus.app 生成
-    mapping: 'pathname' # 用文章路径匹配讨论帖，一般不用改
-    lang: ''            # 留空则跟随 language 主配置
-    reactions: true     # 是否显示文章末尾的表情反应
+    repo: "" # 形如 'xiincs/xiin-blog'
+    repo_id: "" # giscus.app 生成
+    category: "Announcements" # Discussions 的分类名，giscus.app 页面上能选
+    category_id: "" # giscus.app 生成
+    mapping: "pathname" # 用文章路径匹配讨论帖，一般不用改
+    lang: "" # 留空则跟随 language 主配置
+    reactions: true # 是否显示文章末尾的表情反应
 
 # 页脚
 footer:
-  note: ''               # 想说的一句话，支持 HTML；留空则不显示
-  since: ''              # 建站年份，如 2024。留空只显示当前年份
-  powered_by: true       # 是否在页脚署一句 Hexo
+  note: "" # 想说的一句话，支持 HTML；留空则不显示
+  since: "" # 建站年份，如 2024。留空只显示当前年份
+  powered_by: true # 是否在页脚署一句 Hexo
 
 # 社交链接。key 是显示文案，value 是完整 URL。整块留空则不显示。
 social:
@@ -53,12 +76,12 @@ social:
 
 # 那些不吵人的小心思，都可以在这里单独关掉
 extras:
-  scroll_progress: true  # 文章页顶部的阅读进度线
-  back_to_top: true      # 右下角回到顶部
-  copy_code: true        # 代码块右上角的复制按钮
-  heading_anchor: true   # 标题悬停时出现的锚点
-  external_mark: true    # 站外链接后面的 ↗
-  theme_toggle: true     # 顶栏主题切换按钮：跟随系统 / 亮 / 暗
-  toc: true              # 文章内目录，窄屏和标题太少（<2个）时自动不出现
-  related_posts: true    # 文章末尾按标签/分类推荐相关文章
-  shortcut_panel: true   # 按住 Shift 呼出的快捷键面板（切换主题/回首页/随机文章）
+  scroll_progress: true # 文章页顶部的阅读进度线
+  back_to_top: true # 右下角回到顶部
+  copy_code: true # 代码块右上角的复制按钮
+  heading_anchor: true # 标题悬停时出现的锚点
+  external_mark: true # 站外链接后面的 ↗
+  theme_toggle: true # 顶栏主题切换按钮：跟随系统 / 亮 / 暗
+  toc: true # 文章内目录，窄屏和标题太少（<2个）时自动不出现
+  related_posts: true # 文章末尾按标签/分类推荐相关文章
+  shortcut_panel: true # 按住 Shift 呼出的快捷键面板（切换主题/回首页/随机文章）
