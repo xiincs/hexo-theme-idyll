@@ -1,5 +1,13 @@
 # idyll
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![Hexo](https://img.shields.io/badge/hexo-%3E%3D7.0-0E83CD?logo=hexo&logoColor=white)](https://hexo.io)
+[![GitHub stars](https://img.shields.io/github/stars/xiincs/hexo-theme-idyll?color=blue)](https://github.com/xiincs/hexo-theme-idyll/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/xiincs/hexo-theme-idyll)](https://github.com/xiincs/hexo-theme-idyll/commits/master)
+[![GitHub issues](https://img.shields.io/github/issues/xiincs/hexo-theme-idyll)](https://github.com/xiincs/hexo-theme-idyll/issues)
+
+**English** | [简体中文](README.zh-CN.md)
+
 A quiet, readable [Hexo](https://hexo.io/) theme for personal blogs. No JS framework, no build step — just semantic HTML, one stylesheet, and a handful of progressive-enhancement scripts.
 
 ## Design principles
@@ -19,12 +27,20 @@ A quiet, readable [Hexo](https://hexo.io/) theme for personal blogs. No JS frame
 - Copy-to-clipboard code blocks, heading anchors, external-link markers
 - Everything above is a config flag — turn off what you don't want
 
+## Requirements
+
+- Hexo >= 7.0
+- Node.js >= 18
+
 ## Installation
 
 ```bash
 cd your-hexo-site
 git clone https://github.com/xiincs/hexo-theme-idyll.git themes/idyll
+cd themes/idyll && npm install
 ```
+
+The theme uses [cheerio](https://cheerio.js.org/) to build the table of contents; the `npm install` step above pulls it in locally so you don't need to add it to your site's own `package.json`.
 
 Set the theme in your site's `_config.yml`:
 

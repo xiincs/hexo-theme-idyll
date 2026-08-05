@@ -1,0 +1,26 @@
+{
+  "name": "hexo-theme-idyll",
+  "version": "1.0.0",
+  "description": "A quiet, readable Hexo theme",
+  "keywords": [
+    "hexo",
+    "hexo-theme",
+    "theme",
+    "blog",
+    "minimal",
+    "idyll"
+  ],
+  "homepage": "https://github.com/xiincs/hexo-theme-idyll",
+  "repository": "https://github.com/xiincs/hexo-theme-idyll.git",
+  "bugs": {
+    "url": "https://github.com/xiincs/hexo-theme-idyll/issues"
+  },
+  "author": "xiincs",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  }
+}
