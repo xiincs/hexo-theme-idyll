@@ -14,7 +14,9 @@
   // 变量不能叫 toc —— hexo 自己注册了同名内置 helper，传进 partial 时会被那个覆盖掉
   const tocItems = extra.toc ? idyll_toc(page.content) : [];
   const tocCount = tocItems.reduce((n, h2) => n + 1 + h2.children.length, 0);
-  const related  = extra.related_posts ? idyll_related(page, opts.related_count) : [];
+  const series   = extra.series_nav ? idyll_series(page) : null;
+  // 有系列导航就不用相关文章了 —— 系列是作者自己排的强信号，比标签/分类算出来的推荐更值得占这个位置
+  const related  = (!series && extra.related_posts) ? idyll_related(page, opts.related_count) : [];
 %>
 
 <article class="post">
@@ -54,6 +56,14 @@
       <div class="post__tags">
         <% tags.forEach(tag => { %><a class="pill pill--link" href="<%- url_for(tag.path) %>"><%= tag.name %></a><% }); %>
       </div>
+    <% } %>
+
+    <% if (series) { %>
+      <section class="series-nav" aria-label="<%= __('series') %>">
+        <p class="series-nav__label"><%= __('series') %></p>
+        <a class="series-nav__title" href="<%- url_for(series.path) %>"><%= series.name %><span class="item__arrow" aria-hidden="true">→</span></a>
+        <%- partial('_partial/series-list', { posts: series.posts, current: page }) %>
+      </section>
     <% } %>
 
     <% if (related.length) { %><%- partial('_partial/related', { posts: related }) %><% } %>

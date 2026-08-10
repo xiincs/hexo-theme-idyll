@@ -3,6 +3,7 @@ menu:
   archive: Archive
   categories: Categories
   tags: Tags
+  series: Series
   about: About
 
 nav_label: Site navigation
@@ -11,6 +12,7 @@ anchor_label: Link to this section
 archive: Archive
 categories: Categories
 tags: Tags
+series: Series
 untitled: Untitled
 
 min_read: min read
@@ -20,7 +22,7 @@ updated_on: Updated
 toc: Contents
 related_posts: Related posts
 comments: Comments
-hero_stats: '%s posts · %s categories · %s days running · %s words'
+hero_stats: '%s posts · %s categories · %s days running'
 random_post: Random post
 shortcuts_label: Shortcuts
 shortcut_theme: Toggle theme
@@ -34,6 +36,7 @@ next_post: Older post
 
 in_category: in category
 in_tag: tagged
+in_series: in series
 post_count:
   zero: No posts yet
   one: '1 post'
@@ -46,6 +49,10 @@ tag_count:
   zero: No tags yet
   one: '1 tag'
   other: '%d tags'
+series_count:
+  zero: No series yet
+  one: '1 series'
+  other: '%d series'
 
 back_to_top: Back to top
 theme_auto: Auto
@@ -58,6 +65,7 @@ copy_failed: Press Ctrl+C
 empty_posts: Nothing here yet. The first one is always the hardest.
 empty_categories: No categories yet.
 empty_tags: No tags yet.
+empty_series: No series yet.
 
 not_found_title: This page went quiet
 not_found_text: The link is broken, or the page moved on. Neither is your fault.

@@ -3,6 +3,7 @@ menu:
   archive: 归档
   categories: 分类
   tags: 标签
+  series: 系列
   about: 关于
 
 nav_label: 站点导航
@@ -11,6 +12,7 @@ anchor_label: 链接到这一节
 archive: 归档
 categories: 分类
 tags: 标签
+series: 系列
 untitled: 无标题
 
 min_read: 分钟
@@ -20,7 +22,7 @@ updated_on: 更新于
 toc: 目录
 related_posts: 相关文章
 comments: 评论
-hero_stats: '%s 篇文章 · %s 个分类 · 运行 %s 天 · %s 字'
+hero_stats: '%s 篇文章 · %s 个分类 · 运行 %s 天'
 random_post: 随便看看
 shortcuts_label: 快捷键
 shortcut_theme: 切换主题
@@ -34,6 +36,7 @@ next_post: 下一篇
 
 in_category: 分类
 in_tag: 标签
+in_series: 系列
 post_count:
   zero: 还没有文章
   one: '1 篇'
@@ -46,6 +49,10 @@ tag_count:
   zero: 还没有标签
   one: '1 个标签'
   other: '%d 个标签'
+series_count:
+  zero: 还没有系列
+  one: '1 个系列'
+  other: '%d 个系列'
 
 back_to_top: 回到顶部
 theme_auto: 跟随系统
@@ -58,6 +65,7 @@ copy_failed: 请按 Ctrl+C
 empty_posts: 这里还什么都没有。第一篇总是最难写的。
 empty_categories: 还没有分类。
 empty_tags: 还没有标签。
+empty_series: 还没有系列。
 
 not_found_title: 这一页安静下来了
 not_found_text: 链接可能失效了，或者这页已经搬走。都不怪你。
