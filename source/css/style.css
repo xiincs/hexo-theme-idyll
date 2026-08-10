@@ -841,7 +841,62 @@ button { font: inherit; color: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
-/* --- 11.6 评论 ------------------------------------------------------------ */
+/* --- 11.6 系列导航 -------------------------------------------------------- */
+
+.series-nav { margin-top: 48px; }
+
+.series-nav__label {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.series-nav__title {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text);
+  transition: color .16s var(--ease);
+}
+.series-nav__title:hover { color: var(--accent); }
+
+/* 编号列表：详情页和文章页的系列导航共用，跟 .related__link 是同一套列表行语言 */
+.series-list { list-style: none; padding: 0; margin: 0; }
+
+.series-list__link {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px;
+  margin-inline: -12px;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  transition: background .18s var(--ease);
+}
+.series-list__link:hover { background: var(--bg-soft); color: inherit; }
+.series-list__link:hover .item__arrow { opacity: 1; transform: none; }
+
+.series-list__n {
+  flex: none;
+  width: 1.4em;
+  color: var(--text-3);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.series-list__title { font-size: 15.5px; font-weight: 500; line-height: 1.4; }
+
+/* 当前这一篇：不可点，用强调色代替下划线链接标出来 */
+.series-list__item.is-current .series-list__n,
+.series-list__item.is-current .series-list__title {
+  color: var(--accent);
+}
+
+/* --- 11.7 评论 ------------------------------------------------------------ */
 
 /* iframe 内部是 giscus 自己的页面，样式管不到，这里只负责跟正文对齐的外部间距 */
 .comments { margin-top: 56px; }

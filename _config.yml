@@ -9,6 +9,7 @@ menu:
   archive: /archives/
   categories: /categories/
   tags: /tags/
+  series: /series/
   about: /about/
 
 # 首页开场白。title 留空即可整块隐藏。
@@ -84,4 +85,5 @@ extras:
   theme_toggle: true # 顶栏主题切换按钮：跟随系统 / 亮 / 暗
   toc: true # 文章内目录，窄屏和标题太少（<2个）时自动不出现
   related_posts: true # 文章末尾按标签/分类推荐相关文章
+  series_nav: true # 文章末尾的系列导航（文章 frontmatter 写了 series 字段才会出现）
   shortcut_panel: true # 按住 Shift 呼出的快捷键面板（切换主题/回首页/随机文章）

@@ -17,7 +17,7 @@
       <% if (sub) { %><p class="hero__sub" style="animation-delay:60ms"><%- sub %></p><% } %>
 
       <p class="hero__stats" style="animation-delay:120ms">
-        <%- __('hero_stats', numSpan(stats.postCount), numSpan(stats.categoryCount), numSpan(stats.days), numSpan(stats.words)) %>
+        <%- __('hero_stats', numSpan(stats.postCount), numSpan(stats.categoryCount), numSpan(stats.days)) %>
       </p>
 
       <% if (rhythm.length) { %>

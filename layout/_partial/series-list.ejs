@@ -1,0 +1,22 @@
+<%#
+  系列内文章的编号列表。posts 是已按 series_order/日期排好序的数组；
+  current 可选，传当前文章会把对应项标成不可点的高亮态（系列详情页不传，文章页的系列导航会传）。
+%>
+<ol class="series-list">
+  <% posts.forEach((post, i) => {
+       const active = current && post._id === current._id; %>
+    <li class="series-list__item<%= active ? ' is-current' : '' %>">
+      <% if (active) { %>
+        <span class="series-list__link">
+          <span class="series-list__n"><%= i + 1 %></span>
+          <span class="series-list__title"><%= post.title || __('untitled') %></span>
+        </span>
+      <% } else { %>
+        <a class="series-list__link" href="<%- url_for(post.path) %>">
+          <span class="series-list__n"><%= i + 1 %></span>
+          <span class="series-list__title"><%= post.title || __('untitled') %><span class="item__arrow" aria-hidden="true">→</span></span>
+        </a>
+      <% } %>
+    </li>
+  <% }); %>
+</ol>

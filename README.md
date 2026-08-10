@@ -67,6 +67,7 @@ Does:
 - Dark mode. The kind you get from a desk lamp at midnight.
 - Code-block copy, heading anchors, a reading progress bar — small things, on by default, one line each to switch off.
 - Comments, giscus, related-post suggestions. All optional, all quiet until you turn them on.
+- Series support — give a few posts the same `series` front-matter field (optionally `series_order`), and they get an ordered index page plus a "what's next" box at the end of each post.
 
 Doesn't:
 

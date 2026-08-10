@@ -1,0 +1,13 @@
+<%
+  const total = page.posts.length;
+%>
+
+<section class="wrap page-head">
+  <p class="page-head__kicker"><%= __('in_series') %></p>
+  <h1 class="page-head__title"><%= page.name %></h1>
+  <p class="page-head__meta"><%= _p('post_count', total) %></p>
+</section>
+
+<section class="wrap">
+  <%- partial('_partial/series-list', { posts: page.posts, current: null }) %>
+</section>
