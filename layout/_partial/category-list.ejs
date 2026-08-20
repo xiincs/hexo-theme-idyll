@@ -1,0 +1,27 @@
+<%
+  const list = categories || [];
+  const depth = Number(level) || 0;
+%>
+
+<% if (list.length) { %>
+  <ul class="rows <%= depth ? 'rows--categories-child' : 'rows--categories' %>">
+    <% list.forEach(cat => {
+      const children = site.categories
+        .find({ parent: cat._id })
+        .sort('name')
+        .toArray()
+        .filter(child => child.length > 0);
+    %>
+      <li class="rows__item rows__item--category<%= depth ? ' rows__item--child' : '' %>">
+        <a class="rows__link" href="<%- url_for(cat.path) %>">
+          <span class="rows__name"><%= cat.name %></span>
+          <span class="rows__rule" aria-hidden="true"></span>
+          <span class="rows__n"><%= cat.length %></span>
+        </a>
+        <% if (children.length) { %>
+          <%- partial('_partial/category-list', { categories: children, level: depth + 1 }) %>
+        <% } %>
+      </li>
+    <% }); %>
+  </ul>
+<% } %>
