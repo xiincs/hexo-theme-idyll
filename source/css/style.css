@@ -668,6 +668,17 @@ button { font: inherit; color: inherit; }
 
 .rows { list-style: none; padding: 0; }
 
+/* 分类页沿用同一套行列表，但子分类用缩进和竖线表达层级。 */
+.rows--categories-child {
+  margin: 0 0 4px 12px;
+  padding-inline-start: 20px;
+  border-inline-start: 1px solid var(--border);
+}
+
+.rows--categories-child .rows__link {
+  padding-block: 10px;
+}
+
 .rows__link {
   display: flex;
   align-items: baseline;
